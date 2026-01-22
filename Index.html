@@ -2,7 +2,13 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <link rel="manifest" href="manifest.json?v=3">
+
+  <!-- ✅ VERSION UNICA (UGUALE IN TUTTE LE PAGINE DEL PROGETTO) -->
+  <script>
+    const VERSION = "4";
+  </script>
+
+  <link rel="manifest" href="manifest.json?v=4">
   <title>Folletto Tool - Attività</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,10 +17,9 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- ✅ AUTO-FIX PRO: forza URL con ?v=3 + reload una volta in modalità app -->
+  <!-- ✅ AUTO-FIX PRO: forza URL con ?v=VERSION + reload una volta in modalità app -->
   <script>
     (function () {
-      const VERSION = "3";
       const url = new URL(window.location.href);
 
       if (url.searchParams.get("v") !== VERSION) {
@@ -39,9 +44,9 @@
 
   <style>
     :root{
-      --green:#16a34a;          /* verde UI */
+      --green:#16a34a;
       --green2:#0f8a3c;
-      --blue:#3b82c4;           /* barra data */
+      --blue:#3b82c4;
       --blue2:#2f6fb0;
       --txt:#111827;
       --muted:#9ca3af;
@@ -56,7 +61,6 @@
       color:var(--txt);
     }
 
-    /* TOP BAR (bianca) */
     .topbar{
       height:60px;
       background:#fff;
@@ -74,7 +78,7 @@
     .topbar .title{
       font-size:26px;
       font-weight:900;
-      color:#2f8acb; /* azzurrino come in foto */
+      color:#2f8acb;
       letter-spacing:.2px;
     }
     .iconBtn{
@@ -88,14 +92,12 @@
     }
     .iconBtn:active{ transform:scale(.98); }
 
-    /* riga verde sotto topbar */
     .greenLine{
       height:3px;
       background:var(--green);
       width:100%;
     }
 
-    /* BARRA BLU DATA */
     .datebar{
       height:66px;
       background:var(--blue);
@@ -125,7 +127,6 @@
       letter-spacing:.2px;
     }
 
-    /* TABS */
     .tabs{
       display:flex;
       align-items:flex-end;
@@ -142,9 +143,7 @@
       position:relative;
       cursor:pointer;
     }
-    .tab.active{
-      color:#111;
-    }
+    .tab.active{ color:#111; }
     .tab.active::after{
       content:"";
       position:absolute;
@@ -156,10 +155,9 @@
       border-radius:2px;
     }
 
-    /* AREA CONTENUTO */
     .content{
       padding:14px;
-      padding-bottom:170px; /* spazio per bottom bar + stats */
+      padding-bottom:170px;
       background:#fff;
     }
 
@@ -211,7 +209,6 @@
       gap:10px;
     }
 
-    /* SEARCH ROW */
     .searchRow{
       display:flex;
       align-items:center;
@@ -263,17 +260,15 @@
       transform: translateY(2px);
     }
 
-    /* LISTA (placeholder) */
     #listArea{
       margin-top:16px;
       min-height:280px;
     }
 
-    /* STATS BOX (sopra barra blu) */
     .statsRow{
       position:fixed;
       left:0; right:0;
-      bottom:70px;             /* sopra la bottom bar */
+      bottom:70px;
       background:#fff;
       padding:12px 12px;
       display:flex;
@@ -297,7 +292,6 @@
       text-overflow:ellipsis;
     }
 
-    /* BOTTOM BAR (blu) */
     .bottomBar{
       position:fixed;
       left:0; right:0;
@@ -323,7 +317,6 @@
     .bottomItem i{ font-size:22px; }
     .bottomItem span{ font-size:18px; }
 
-    /* drawer minimale (hamburger) */
     .drawerOverlay{
       position:fixed; inset:0;
       background:rgba(0,0,0,.25);
@@ -396,7 +389,7 @@
   <!-- DATE BAR -->
   <div class="datebar">
     <button class="arrow left" type="button" onclick="shiftDay(-1)"><i class="fa fa-chevron-left"></i></button>
-    <div class="dateText" id="dateText">Ven 23 Gennaio 2026</div>
+    <div class="dateText" id="dateText">--</div>
     <button class="arrow right" type="button" onclick="shiftDay(1)"><i class="fa fa-chevron-right"></i></button>
   </div>
 
@@ -429,7 +422,6 @@
       </button>
     </div>
 
-    <!-- lista vuota (come schermata in foto) -->
     <div id="listArea"></div>
   </div>
 
@@ -453,16 +445,16 @@
   <script>
     // ✅ Gate login
     if (localStorage.getItem("auth_ok") !== "1") {
-      window.location.replace("index.html?v=3");
+      window.location.replace("index.html?v=" + VERSION);
     }
 
     function openDrawer(){ document.getElementById("drawerOverlay").style.display="block"; }
     function closeDrawer(){ document.getElementById("drawerOverlay").style.display="none"; }
 
-    function goHome(){ window.location.href="index.html?v=3"; }
+    function goHome(){ window.location.href = "index.html?v=" + VERSION; }
     function logout(){
       localStorage.removeItem("auth_ok");
-      window.location.href="index.html?v=3";
+      window.location.href = "index.html?v=" + VERSION;
     }
 
     // Tabs (placeholder)
@@ -491,12 +483,13 @@
     }
     renderDate();
 
-    // Pulsanti (placeholder, poi li riempiamo)
+    // Pulsanti (placeholder)
     function addNewStreet(){ document.getElementById("streetInput").focus(); }
+
     function quickAddStreet(){
       const v=document.getElementById("streetInput").value.trim();
       if(!v) return;
-      // per ora metto una riga semplice (poi la facciamo "vera" con esiti/porte/leggenda)
+
       const row=document.createElement("div");
       row.style.marginTop="12px";
       row.style.padding="12px 14px";
@@ -504,12 +497,14 @@
       row.style.borderRadius="12px";
       row.style.fontWeight="900";
       row.textContent = "📍 " + v;
+
       document.getElementById("listArea").prepend(row);
       document.getElementById("streetInput").value="";
     }
+
     function duplicateDay(){ alert("Duplica: lo attiviamo appena definisci la logica."); }
     function openFilters(){ alert("Filtri: lo attiviamo appena definisci gli stati/leggenda."); }
-    function collapseTop(){ /* se vuoi la faccio davvero: nascondo riga input */ }
+    function collapseTop(){ /* se vuoi lo faccio davvero */ }
 
     function openReport(){ alert("Report: dopo."); }
     function openInfo(){ alert("Info: dopo."); }

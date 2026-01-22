@@ -2,37 +2,16 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <script>const VERSION="4";</script>
-
-  <title>Folletto Tool - Attività</title>
+  <title>Attività</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="manifest.json?v=4">
-
-  <!-- Anti cache -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-
-  <!-- Auto-fix version -->
-  <script>
-    (function(){
-      const u=new URL(location.href);
-      if(u.searchParams.get("v")!==VERSION){
-        u.searchParams.set("v",VERSION);
-        location.replace(u.toString());
-        return;
-      }
-    })();
-  </script>
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root{
-      --green:#18a64a;
       --blue:#3b82c4;
+      --green:#18a64a;
       --line:#e6eaf0;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -40,7 +19,7 @@
       background:#fff;
     }
 
-    /* TOP */
+    /* ===== TOP ===== */
     .topbar{
       height:64px;
       display:flex;
@@ -49,14 +28,15 @@
       padding:0 14px;
       border-bottom:1px solid var(--line);
     }
-    .title{font-size:28px;font-weight:700;color:#2f8acb}
-    .iconBtn{
-      background:none;border:0;font-size:22px;color:var(--green)
+    .title{
+      font-size:28px;
+      font-weight:700;
+      color:#2f8acb;
     }
 
     .greenLine{height:3px;background:var(--green)}
 
-    /* DATE */
+    /* ===== DATE ===== */
     .datebar{
       height:64px;
       background:var(--blue);
@@ -64,19 +44,9 @@
       display:flex;
       align-items:center;
       justify-content:center;
-      position:relative;
       font-weight:600;
+      position:relative;
     }
-    .datebar button{
-      position:absolute;
-      top:50%;
-      transform:translateY(-50%);
-      background:none;border:0;
-      color:#fff;font-size:20px;
-    }
-    .datebar .left{left:10px}
-    .datebar .right{right:10px}
-
     .todayBar{
       height:40px;
       background:var(--green);
@@ -87,8 +57,11 @@
       font-weight:700;
     }
 
-    /* TABS */
-    .tabs{display:flex;border-bottom:1px solid var(--line)}
+    /* ===== TABS ===== */
+    .tabs{
+      display:flex;
+      border-bottom:1px solid var(--line);
+    }
     .tab{
       flex:1;
       text-align:center;
@@ -102,49 +75,77 @@
       border-bottom:3px solid #000;
     }
 
-    /* CONTENT */
-    .content{padding:16px 14px 180px}
-    .rowTop{display:flex;gap:12px;margin-bottom:14px}
-    .btnAdd{
-      flex:1;height:50px;
+    /* ===== CONTENT ===== */
+    .content{
+      padding:16px 14px 190px;
+    }
+
+    .rowTop{
+      display:flex;
+      gap:12px;
+      margin-bottom:14px;
+    }
+    .btnMain{
+      flex:1;
+      height:50px;
       background:var(--green);
       color:#fff;
-      border:0;border-radius:10px;
-      font-size:17px;font-weight:700;
+      border:0;
+      border-radius:10px;
+      font-size:17px;
+      font-weight:700;
     }
     .btnSmall{
-      width:54px;height:50px;
+      width:54px;
+      height:50px;
       border:1px solid #d7e7db;
-      background:#fff;border-radius:10px;
-      font-size:22px;color:var(--green)
+      background:#fff;
+      border-radius:10px;
+      font-size:22px;
+      color:var(--green);
     }
 
-    .searchRow{display:flex;gap:12px}
+    .searchRow{
+      display:flex;
+      gap:12px;
+    }
     .searchBox{
-      flex:1;height:48px;
+      flex:1;
+      height:48px;
       border:2px solid #bfe5c9;
       border-radius:14px;
-      display:flex;align-items:center;
-      padding:0 14px;gap:10px
+      display:flex;
+      align-items:center;
+      padding:0 14px;
+      font-size:17px;
     }
     .searchBox input{
-      border:0;outline:none;
-      font-size:17px;width:100%
+      border:0;
+      outline:none;
+      width:100%;
+      font-size:17px;
     }
     .btnPlus{
-      width:44px;height:44px;
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      border:0;
       background:var(--green);
-      color:#fff;border-radius:50%;
-      border:0;font-size:26px
+      color:#fff;
+      font-size:26px;
+      font-weight:700;
     }
 
-    /* STATS */
+    /* ===== STATS ===== */
     .statsRow{
       position:fixed;
-      left:0;right:0;
-      bottom:70px;
-      display:flex;gap:12px;
-      padding:12px;background:#fff;
+      left:0;
+      right:0;
+      bottom:74px;
+      display:flex;
+      gap:12px;
+      padding:12px;
+      background:#fff;
       border-top:1px solid var(--line);
     }
     .stat{
@@ -154,90 +155,157 @@
       text-align:center;
       padding:12px;
       font-weight:700;
-      color:var(--green)
+      color:var(--green);
     }
 
-    /* BOTTOM BAR IDENTICA ALL’ORIGINALE */
+    /* ===== BOTTOM BAR (IDENTICA ALLO SCREEN) ===== */
     .bottomBar{
       position:fixed;
-      left:0;right:0;bottom:0;
-      height:70px;
+      left:0; right:0; bottom:0;
+      height:74px;
       background:var(--blue);
       display:flex;
     }
+
     .bottomItem{
       flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap:16px;
+      font-weight:800;
       color:#fff;
-      font-weight:700;
     }
-    .bottomItem i{font-size:24px}
-    .bottomItem span{font-size:22px}
 
     .bottomItem + .bottomItem{
-      border-left:2px solid rgba(255,255,255,.55);
+      border-left:3px solid rgba(255,255,255,.75);
     }
-    .bottomItem.people i{color:#b06ad7}
+
+    .ico{
+      width:38px;
+      height:38px;
+      display:block;
+    }
+
+    .num{
+      font-size:30px;
+      line-height:1;
+    }
+
+    .people .ico *{
+      fill:#b06ad7 !important;
+      stroke:#b06ad7 !important;
+    }
   </style>
 </head>
 
 <body>
 
+  <!-- TOP -->
   <div class="topbar">
-    <button class="iconBtn"><i class="fa fa-bars"></i></button>
+    <div>☰</div>
     <div class="title">Attività</div>
-    <div>
-      <button class="iconBtn"><i class="fa-regular fa-file-lines"></i></button>
-      <button class="iconBtn" style="color:#2f8acb"><i class="fa fa-circle-info"></i></button>
-    </div>
+    <div>ⓘ</div>
   </div>
   <div class="greenLine"></div>
 
-  <div class="datebar">
-    <button class="left"><i class="fa fa-chevron-left"></i></button>
-    Ven 23 Gennaio 2026
-    <button class="right"><i class="fa fa-chevron-right"></i></button>
-  </div>
-
+  <!-- DATE -->
+  <div class="datebar">Ven 23 Gennaio 2026</div>
   <div class="todayBar">OGGI</div>
 
+  <!-- TABS -->
   <div class="tabs">
     <div class="tab active">Le mie Attività</div>
     <div class="tab">Appuntamenti</div>
   </div>
 
+  <!-- CONTENT -->
   <div class="content">
     <div class="rowTop">
-      <button class="btnAdd">Aggiungi nuova via</button>
-      <button class="btnSmall"><i class="fa-regular fa-clone"></i></button>
-      <button class="btnSmall"><i class="fa fa-ellipsis-vertical"></i></button>
+      <button class="btnMain">Aggiungi nuova via</button>
+      <button class="btnSmall">⧉</button>
+      <button class="btnSmall">⋮</button>
     </div>
 
     <div class="searchRow">
       <div class="searchBox">
-        <i class="fa fa-magnifying-glass"></i>
         <input placeholder="Aggiungi nuova via">
       </div>
       <button class="btnPlus">+</button>
     </div>
   </div>
 
+  <!-- STATS -->
   <div class="statsRow">
     <div class="stat">Demo: 0</div>
     <div class="stat">Ordini: 0</div>
     <div class="stat">Apparecchi: 0,00</div>
   </div>
 
+  <!-- ===== BOTTOM BAR SVG ===== -->
   <div class="bottomBar">
-    <div class="bottomItem"><i class="fa-regular fa-hand-pointer"></i><span>0</span></div>
-    <div class="bottomItem"><i class="fa-regular fa-bell"></i><span>0</span></div>
-    <div class="bottomItem"><i class="fa-solid fa-diagram-project"></i><span>0</span></div>
-    <div class="bottomItem"><i class="fa-solid fa-house"></i><span>0</span></div>
-    <div class="bottomItem"><i class="fa-regular fa-square-check"></i><span>0</span></div>
-    <div class="bottomItem people"><i class="fa-solid fa-people-group"></i><span>0</span></div>
+
+    <!-- mano -->
+    <div class="bottomItem">
+      <svg class="ico" viewBox="0 0 64 64">
+        <path fill="#fff" d="M22 30V16c0-2.2 1.8-4 4-4s4 1.8 4 4v14h2V14c0-2.2 1.8-4 4-4s4 1.8 4 4v16h2V18c0-2.2 1.8-4 4-4s4 1.8 4 4v20c0 9.9-8.1 18-18 18H28c-7.7 0-14-6.3-14-14V30c0-2.2 1.8-4 4-4s4 1.8 4 4v10h2V30z"/>
+        <path fill="#fff" d="M12 48h12v8H12c-2.2 0-4-1.8-4-4s1.8-4 4-4z"/>
+      </svg>
+      <span class="num">0</span>
+    </div>
+
+    <!-- campana -->
+    <div class="bottomItem">
+      <svg class="ico" viewBox="0 0 64 64">
+        <path fill="#fff" d="M32 58c3 0 5.5-2.3 5.9-5.2H26.1C26.5 55.7 29 58 32 58z"/>
+        <path fill="#fff" d="M52 46H12c-1.7 0-3-1.3-3-3 0-1.2.7-2.3 1.8-2.8l3.2-1.6V30c0-9.2 6.2-16.7 14-18.7V8c0-1.7 1.3-3 3-3s3 1.3 3 3v3.3c7.8 2 14 9.5 14 18.7v8.6l3.2 1.6c1.1.5 1.8 1.6 1.8 2.8 0 1.7-1.3 3-3 3z"/>
+      </svg>
+      <span class="num">0</span>
+    </div>
+
+    <!-- icona custom -->
+    <div class="bottomItem">
+      <svg class="ico" viewBox="0 0 64 64">
+        <rect x="18" y="10" width="18" height="14" rx="2" fill="#fff"/>
+        <rect x="40" y="12" width="12" height="10" rx="2" fill="#fff"/>
+        <circle cx="24" cy="33" r="8" fill="#fff"/>
+        <circle cx="44" cy="33" r="8" fill="#fff"/>
+        <rect x="14" y="44" width="24" height="12" rx="6" fill="#fff"/>
+        <rect x="34" y="44" width="20" height="12" rx="6" fill="#fff"/>
+      </svg>
+      <span class="num">0</span>
+    </div>
+
+    <!-- casa -->
+    <div class="bottomItem">
+      <svg class="ico" viewBox="0 0 64 64">
+        <path fill="#fff" d="M8 30 32 10l24 20v26c0 2.2-1.8 4-4 4H12c-2.2 0-4-1.8-4-4V30z"/>
+      </svg>
+      <span class="num">0</span>
+    </div>
+
+    <!-- calendario -->
+    <div class="bottomItem">
+      <svg class="ico" viewBox="0 0 64 64">
+        <rect x="12" y="14" width="40" height="40" rx="4" fill="none" stroke="#fff" stroke-width="5"/>
+        <line x1="12" y1="24" x2="52" y2="24" stroke="#fff" stroke-width="5"/>
+        <path d="M24 40l6 6 12-14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <span class="num">0</span>
+    </div>
+
+    <!-- persone -->
+    <div class="bottomItem people">
+      <svg class="ico" viewBox="0 0 64 64">
+        <circle cx="18" cy="22" r="6"/>
+        <circle cx="32" cy="20" r="7"/>
+        <circle cx="46" cy="22" r="6"/>
+        <path d="M8 54c0-8 6-14 14-14s14 6 14 14H8z"/>
+        <path d="M22 54c0-9 7-16 16-16s16 7 16 16H22z"/>
+      </svg>
+      <span class="num">0</span>
+    </div>
+
   </div>
 
 </body>

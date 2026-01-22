@@ -2,40 +2,25 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
+  <script>const VERSION="4";</script>
 
-  <!-- ✅ VERSION UNICA (UGUALE IN TUTTE LE PAGINE DEL PROGETTO) -->
-  <script>
-    const VERSION = "4";
-  </script>
-
-  <link rel="manifest" href="manifest.json?v=4">
   <title>Folletto Tool - Attività</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="manifest.json?v=4">
 
-  <!-- Anti-cache -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
-  <meta http-equiv="Expires" content="0" />
+  <!-- Anti cache -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
-  <!-- ✅ AUTO-FIX PRO: forza URL con ?v=VERSION + reload una volta in modalità app -->
+  <!-- Auto-fix version -->
   <script>
-    (function () {
-      const url = new URL(window.location.href);
-
-      if (url.searchParams.get("v") !== VERSION) {
-        url.searchParams.set("v", VERSION);
-        window.location.replace(url.toString());
+    (function(){
+      const u=new URL(location.href);
+      if(u.searchParams.get("v")!==VERSION){
+        u.searchParams.set("v",VERSION);
+        location.replace(u.toString());
         return;
-      }
-
-      const isStandalone =
-        (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
-        window.navigator.standalone === true;
-
-      const reloadKey = "folletto_pwa_reload_v_" + VERSION;
-      if (isStandalone && !sessionStorage.getItem(reloadKey)) {
-        sessionStorage.setItem(reloadKey, "1");
-        window.location.reload();
       }
     })();
   </script>
@@ -45,64 +30,33 @@
   <style>
     :root{
       --green:#18a64a;
-      --green-dark:#12913f;
       --blue:#3b82c4;
-      --txt:#111827;
-      --muted:#9aa3af;
       --line:#e6eaf0;
-      --bg:#ffffff;
     }
-
-    *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    *{box-sizing:border-box}
     body{
       margin:0;
       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-      background:var(--bg);
-      color:var(--txt);
+      background:#fff;
     }
 
-    /* TOP BAR */
+    /* TOP */
     .topbar{
       height:64px;
-      background:#fff;
       display:flex;
       align-items:center;
       justify-content:space-between;
       padding:0 14px;
       border-bottom:1px solid var(--line);
     }
-    .topbar .left, .topbar .right{
-      display:flex;
-      align-items:center;
-      gap:18px;
-      min-width:92px;
-    }
-    .topbar .title{
-      font-size:28px;
-      font-weight:700;
-      color:#2f8acb;
-      letter-spacing:.2px;
-    }
+    .title{font-size:28px;font-weight:700;color:#2f8acb}
     .iconBtn{
-      border:0;
-      background:transparent;
-      padding:10px;
-      font-size:22px;
-      cursor:pointer;
-      border-radius:12px;
-      color:var(--green);
-    }
-    .iconBtn.info{ color:#2f8acb; }
-    .iconBtn:active{ transform:scale(.98); }
-
-    /* linea verde */
-    .greenLine{
-      height:3px;
-      background:var(--green);
-      width:100%;
+      background:none;border:0;font-size:22px;color:var(--green)
     }
 
-    /* barra data blu */
+    .greenLine{height:3px;background:var(--green)}
+
+    /* DATE */
     .datebar{
       height:64px;
       background:var(--blue);
@@ -111,456 +65,180 @@
       align-items:center;
       justify-content:center;
       position:relative;
+      font-weight:600;
     }
-    .datebar .arrow{
+    .datebar button{
       position:absolute;
       top:50%;
       transform:translateY(-50%);
-      border:0;
-      background:transparent;
-      color:#fff;
-      font-size:20px;
-      padding:14px;
-      cursor:pointer;
-      opacity:.95;
+      background:none;border:0;
+      color:#fff;font-size:20px;
     }
-    .datebar .arrow.left{ left:10px; }
-    .datebar .arrow.right{ right:10px; }
-    .datebar .dateText{
-      font-weight:600;
-      font-size:18px;
-      letter-spacing:.2px;
-    }
+    .datebar .left{left:10px}
+    .datebar .right{right:10px}
 
-    /* barra verde OGGI */
     .todayBar{
       height:40px;
       background:var(--green);
+      color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
-      color:#fff;
       font-weight:700;
-      letter-spacing:.4px;
     }
 
-    /* tabs */
-    .tabs{
-      display:flex;
-      background:#fff;
-      border-bottom:1px solid var(--line);
-    }
+    /* TABS */
+    .tabs{display:flex;border-bottom:1px solid var(--line)}
     .tab{
       flex:1;
       text-align:center;
-      padding:14px 10px 12px;
-      font-weight:600;
+      padding:14px;
       font-size:18px;
       color:#b3bcc7;
-      position:relative;
-      cursor:pointer;
     }
     .tab.active{
-      color:#111;
+      color:#000;
       font-weight:700;
-    }
-    .tab.active::after{
-      content:"";
-      position:absolute;
-      left:10%;
-      right:10%;
-      bottom:0;
-      height:3px;
-      background:#111;
-      border-radius:3px;
+      border-bottom:3px solid #000;
     }
 
-    /* content */
-    .content{
-      padding:16px 14px 170px;
-      background:#fff;
-    }
-
-    .rowTop{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-top:6px;
-      margin-bottom:14px;
-    }
-
-    /* bottone grande verde */
-    .btnAddStreet{
-      flex:1;
-      height:50px;
-      border:0;
+    /* CONTENT */
+    .content{padding:16px 14px 180px}
+    .rowTop{display:flex;gap:12px;margin-bottom:14px}
+    .btnAdd{
+      flex:1;height:50px;
       background:var(--green);
       color:#fff;
-      font-weight:700;
-      font-size:17px;
-      border-radius:10px;
-      cursor:pointer;
+      border:0;border-radius:10px;
+      font-size:17px;font-weight:700;
     }
-    .btnAddStreet:active{ transform:scale(.99); background:var(--green-dark); }
-
-    /* icona duplica “flat” */
-    .btnClone{
-      width:54px;
-      height:50px;
-      border-radius:10px;
+    .btnSmall{
+      width:54px;height:50px;
       border:1px solid #d7e7db;
-      background:#fff;
-      color:var(--green);
-      font-size:22px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      background:#fff;border-radius:10px;
+      font-size:22px;color:var(--green)
     }
 
-    /* filtri “outlined” */
-    .btnFilter{
-      height:50px;
-      min-width:112px;
-      border-radius:12px;
-      border:2px solid var(--green);
-      background:#fff;
-      color:var(--green);
-      font-weight:700;
-      font-size:17px;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-    }
-
-    /* search row come originale: pulita, bordo verde */
-    .searchRow{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-top:6px;
-    }
+    .searchRow{display:flex;gap:12px}
     .searchBox{
-      flex:1;
-      height:48px;
-      border-radius:14px;
+      flex:1;height:48px;
       border:2px solid #bfe5c9;
-      background:#fff;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding:0 14px;
-    }
-    .searchBox i{
-      color:var(--green);
-      font-size:16px;
-      opacity:.9;
+      border-radius:14px;
+      display:flex;align-items:center;
+      padding:0 14px;gap:10px
     }
     .searchBox input{
-      border:0;
-      outline:none;
-      width:100%;
-      font-size:17px;
-      background:transparent;
-      color:#111;
+      border:0;outline:none;
+      font-size:17px;width:100%
     }
-    .searchBox input::placeholder{ color:#a7b0bb; }
-
     .btnPlus{
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      border:0;
+      width:44px;height:44px;
       background:var(--green);
-      color:#fff;
-      font-size:26px;
-      font-weight:700;
-      cursor:pointer;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-    .btnUp{
-      width:40px;
-      height:44px;
-      border:0;
-      background:transparent;
-      color:var(--green);
-      font-size:26px;
-      cursor:pointer;
+      color:#fff;border-radius:50%;
+      border:0;font-size:26px
     }
 
-    #listArea{
-      margin-top:18px;
-      min-height:280px;
-    }
-
-    /* stats: 3 box come originale (flat, bordo verde) */
+    /* STATS */
     .statsRow{
       position:fixed;
-      left:0; right:0;
+      left:0;right:0;
       bottom:70px;
-      background:#fff;
-      padding:12px 12px;
-      display:flex;
-      gap:12px;
-      z-index:40;
+      display:flex;gap:12px;
+      padding:12px;background:#fff;
       border-top:1px solid var(--line);
     }
-    .statBox{
+    .stat{
       flex:1;
       border:2px solid var(--green);
       border-radius:12px;
-      padding:12px 10px;
       text-align:center;
+      padding:12px;
       font-weight:700;
-      color:var(--green);
-      background:#fff;
-      font-size:16px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
+      color:var(--green)
     }
 
-    /* bottom bar: più “soft” come app (icone non enormi) */
+    /* BOTTOM BAR IDENTICA ALL’ORIGINALE */
     .bottomBar{
       position:fixed;
-      left:0; right:0;
-      bottom:0;
+      left:0;right:0;bottom:0;
       height:70px;
       background:var(--blue);
       display:flex;
-      align-items:center;
-      justify-content:space-around;
-      padding:0 8px;
-      z-index:50;
-      border-top:1px solid rgba(255,255,255,.18);
     }
     .bottomItem{
+      flex:1;
       display:flex;
       align-items:center;
-      gap:8px;
-      color:#fff;
-      font-weight:600;
-      opacity:.98;
-      min-width:44px;
       justify-content:center;
-    }
-    .bottomItem i{ font-size:18px; opacity:.95; }
-    .bottomItem span{ font-size:16px; }
-
-    /* drawer */
-    .drawerOverlay{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.25);
-      display:none;
-      z-index:100;
-    }
-    .drawer{
-      width:280px;
-      height:100%;
-      background:#fff;
-      padding:16px;
-      box-shadow:14px 0 40px rgba(0,0,0,.18);
-    }
-    .drawer h3{
-      margin:8px 0 14px;
-      font-size:18px;
-      font-weight:700;
-      color:#2f8acb;
-    }
-    .drawer .dBtn{
-      width:100%;
-      border:0;
-      background:#111;
+      gap:10px;
       color:#fff;
       font-weight:700;
-      padding:14px 14px;
-      border-radius:12px;
-      cursor:pointer;
-      margin-top:10px;
-      font-size:16px;
     }
+    .bottomItem i{font-size:24px}
+    .bottomItem span{font-size:22px}
 
-    @media(max-width:420px){
-      .topbar .title{ font-size:26px; }
-      .tab{ font-size:17px; }
-      .btnFilter{ min-width:108px; font-size:16px; }
-      .btnAddStreet{ font-size:16px; }
-      .statBox{ font-size:15px; }
-      .bottomItem i{ font-size:17px; }
-      .bottomItem span{ font-size:15px; }
+    .bottomItem + .bottomItem{
+      border-left:2px solid rgba(255,255,255,.55);
     }
+    .bottomItem.people i{color:#b06ad7}
   </style>
 </head>
 
 <body>
 
-  <!-- Drawer -->
-  <div class="drawerOverlay" id="drawerOverlay" onclick="closeDrawer(event)">
-    <div class="drawer" onclick="event.stopPropagation()">
-      <h3>Menu</h3>
-      <button class="dBtn" type="button" onclick="goHome()">← Menu</button>
-      <button class="dBtn" type="button" onclick="logout()">Disconnetti</button>
-    </div>
-  </div>
-
-  <!-- TOP -->
   <div class="topbar">
-    <div class="left">
-      <button class="iconBtn" type="button" onclick="openDrawer()"><i class="fa fa-bars"></i></button>
-    </div>
+    <button class="iconBtn"><i class="fa fa-bars"></i></button>
     <div class="title">Attività</div>
-    <div class="right">
-      <button class="iconBtn" type="button" onclick="openReport()" title="Report">
-        <i class="fa-regular fa-file-lines"></i>
-      </button>
-      <button class="iconBtn info" type="button" onclick="openInfo()" title="Info">
-        <i class="fa fa-circle-info"></i>
-      </button>
+    <div>
+      <button class="iconBtn"><i class="fa-regular fa-file-lines"></i></button>
+      <button class="iconBtn" style="color:#2f8acb"><i class="fa fa-circle-info"></i></button>
     </div>
   </div>
   <div class="greenLine"></div>
 
-  <!-- DATE BAR -->
   <div class="datebar">
-    <button class="arrow left" type="button" onclick="shiftDay(-1)"><i class="fa fa-chevron-left"></i></button>
-    <div class="dateText" id="dateText">--</div>
-    <button class="arrow right" type="button" onclick="shiftDay(1)"><i class="fa fa-chevron-right"></i></button>
+    <button class="left"><i class="fa fa-chevron-left"></i></button>
+    Ven 23 Gennaio 2026
+    <button class="right"><i class="fa fa-chevron-right"></i></button>
   </div>
 
-  <!-- OGGI -->
-  <div class="todayBar" id="todayBar">OGGI</div>
+  <div class="todayBar">OGGI</div>
 
-  <!-- TABS -->
   <div class="tabs">
-    <div class="tab active" id="tabAtt" onclick="setTab('att')">Le mie Attività</div>
-    <div class="tab" id="tabApp" onclick="setTab('app')">Appuntamenti</div>
+    <div class="tab active">Le mie Attività</div>
+    <div class="tab">Appuntamenti</div>
   </div>
 
-  <!-- CONTENT -->
   <div class="content">
     <div class="rowTop">
-      <button class="btnAddStreet" type="button" onclick="addNewStreet()">Aggiungi nuova via</button>
-      <button class="btnClone" type="button" onclick="duplicateDay()" title="Duplica">
-        <i class="fa-regular fa-clone"></i>
-      </button>
-      <button class="btnFilter" type="button" onclick="openFilters()">
-        <i class="fa fa-ellipsis-vertical"></i> Filtri
-      </button>
+      <button class="btnAdd">Aggiungi nuova via</button>
+      <button class="btnSmall"><i class="fa-regular fa-clone"></i></button>
+      <button class="btnSmall"><i class="fa fa-ellipsis-vertical"></i></button>
     </div>
 
     <div class="searchRow">
       <div class="searchBox">
         <i class="fa fa-magnifying-glass"></i>
-        <input id="streetInput" placeholder="Aggiungi nuova via" autocomplete="off">
+        <input placeholder="Aggiungi nuova via">
       </div>
-      <button class="btnPlus" type="button" onclick="quickAddStreet()">+</button>
-      <button class="btnUp" type="button" onclick="collapseTop()" title="Comprimi">
-        <i class="fa fa-angle-up"></i>
-      </button>
+      <button class="btnPlus">+</button>
     </div>
-
-    <div id="listArea"></div>
   </div>
 
-  <!-- STATS -->
   <div class="statsRow">
-    <div class="statBox" id="statDemo">Demo: 0</div>
-    <div class="statBox" id="statOrdini">Ordini: 0</div>
-    <div class="statBox" id="statApp">Apparecchi: 0,00</div>
+    <div class="stat">Demo: 0</div>
+    <div class="stat">Ordini: 0</div>
+    <div class="stat">Apparecchi: 0,00</div>
   </div>
 
-  <!-- BOTTOM BAR -->
   <div class="bottomBar">
-    <div class="bottomItem"><i class="fa-regular fa-hand-pointer"></i><span id="c1">0</span></div>
-    <div class="bottomItem"><i class="fa-regular fa-bell"></i><span id="c2">0</span></div>
-    <div class="bottomItem"><i class="fa-solid fa-diagram-project"></i><span id="c3">0</span></div>
-    <div class="bottomItem"><i class="fa-solid fa-house"></i><span id="c4">0</span></div>
-    <div class="bottomItem"><i class="fa-regular fa-square-check"></i><span id="c5">0</span></div>
-    <div class="bottomItem"><i class="fa-solid fa-people-group"></i><span id="c6">0</span></div>
+    <div class="bottomItem"><i class="fa-regular fa-hand-pointer"></i><span>0</span></div>
+    <div class="bottomItem"><i class="fa-regular fa-bell"></i><span>0</span></div>
+    <div class="bottomItem"><i class="fa-solid fa-diagram-project"></i><span>0</span></div>
+    <div class="bottomItem"><i class="fa-solid fa-house"></i><span>0</span></div>
+    <div class="bottomItem"><i class="fa-regular fa-square-check"></i><span>0</span></div>
+    <div class="bottomItem people"><i class="fa-solid fa-people-group"></i><span>0</span></div>
   </div>
 
-  <script>
-    // ✅ Gate login
-    if (localStorage.getItem("auth_ok") !== "1") {
-      window.location.replace("index.html?v=" + VERSION);
-    }
-
-    function openDrawer(){ document.getElementById("drawerOverlay").style.display="block"; }
-    function closeDrawer(){ document.getElementById("drawerOverlay").style.display="none"; }
-
-    function goHome(){ window.location.href = "index.html?v=" + VERSION; }
-    function logout(){
-      localStorage.removeItem("auth_ok");
-      window.location.href = "index.html?v=" + VERSION;
-    }
-
-    // Tabs (placeholder)
-    function setTab(which){
-      const a=document.getElementById("tabAtt");
-      const p=document.getElementById("tabApp");
-      if(which==="att"){ a.classList.add("active"); p.classList.remove("active"); }
-      else { p.classList.add("active"); a.classList.remove("active"); }
-    }
-
-    // Date
-    const mesi=["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
-    const giorni=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
-    let current=new Date();
-
-    function renderDate(){
-      const g=giorni[current.getDay()];
-      const d=String(current.getDate()).padStart(2,"0");
-      const m=mesi[current.getMonth()];
-      const y=current.getFullYear();
-      document.getElementById("dateText").textContent = `${g} ${d} ${m} ${y}`;
-
-      // OGGI bar: se la data è oggi, scrive OGGI, altrimenti vuota
-      const now = new Date();
-      const same =
-        now.getFullYear()===current.getFullYear() &&
-        now.getMonth()===current.getMonth() &&
-        now.getDate()===current.getDate();
-
-      document.getElementById("todayBar").textContent = same ? "OGGI" : "";
-      document.getElementById("todayBar").style.display = same ? "flex" : "none";
-    }
-    function shiftDay(n){
-      current.setDate(current.getDate()+n);
-      renderDate();
-    }
-    renderDate();
-
-    // Pulsanti (placeholder)
-    function addNewStreet(){ document.getElementById("streetInput").focus(); }
-
-    function quickAddStreet(){
-      const v=document.getElementById("streetInput").value.trim();
-      if(!v) return;
-
-      // riga semplice “flat”
-      const row=document.createElement("div");
-      row.style.marginTop="12px";
-      row.style.padding="12px 14px";
-      row.style.border="1px solid #e6eaf0";
-      row.style.borderRadius="12px";
-      row.style.fontWeight="700";
-      row.style.background="#fff";
-      row.textContent = "📍 " + v;
-
-      document.getElementById("listArea").prepend(row);
-      document.getElementById("streetInput").value="";
-    }
-
-    function duplicateDay(){ alert("Duplica: lo attiviamo appena definisci la logica."); }
-    function openFilters(){ alert("Filtri: lo attiviamo appena definisci gli stati/leggenda."); }
-    function collapseTop(){ /* se vuoi lo faccio davvero */ }
-
-    function openReport(){ alert("Report: dopo."); }
-    function openInfo(){ alert("Info: dopo."); }
-  </script>
 </body>
 </html>

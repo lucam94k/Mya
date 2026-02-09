@@ -1,1338 +1,308 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Attività</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyA PRO</title>
 
-  <style>
-    :root{
-      --blue:#3b82c4;
-      --green:#18a64a;
-      --line:#e6eaf0;
-      --muted:#9aa5b1;
-      --bg:#ffffff;
-      --danger:#e53935;
-      --card:#ffffff;
-      --shadow: 0 6px 18px rgba(0,0,0,.06);
-    }
+<style>
+:root{
+  --green:#1FA64A;
+  --blue:#2F7CC2;
+  --line:#E6EAF0;
+  --shadow:0 10px 25px rgba(0,0,0,.08);
+  --radius:18px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:var(--font);background:#fff}
 
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-      background:var(--bg);
-      color:#111;
-    }
+.top{height:18px;background:var(--green)}
+.header{
+  height:64px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+  font-size:28px;
+  color:var(--blue);
+  border-bottom:1px solid var(--line);
+}
 
-    /* ===== TOP ===== */
-    .topbar{
-      height:64px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:0 14px;
-      border-bottom:1px solid var(--line);
-      background:#fff;
-      position:sticky;
-      top:0;
-      z-index:5;
-    }
-    .title{
-      font-size:28px;
-      font-weight:800;
-      color:#2f8acb;
-      letter-spacing:.2px;
-    }
-    .iconBtn{
-      border:0;
-      background:transparent;
-      font-size:22px;
-      cursor:pointer;
-      padding:10px;
-      border-radius:10px;
-    }
-    .iconBtn:active{transform:scale(.98); background:#f3f6fb;}
+.content{padding:14px 14px 140px}
 
-    .greenLine{height:3px;background:var(--green)}
+.btn{
+  width:100%;
+  height:54px;
+  border-radius:14px;
+  border:0;
+  background:var(--green);
+  color:#fff;
+  font-size:18px;
+  font-weight:900;
+  margin-bottom:12px;
+}
 
-    /* ===== DATE ===== */
-    .datebar{
-      height:56px;
-      background:var(--blue);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:800;
-      position:relative;
-      padding:0 48px;
-      text-align:center;
-    }
-    .dateNav{
-      position:absolute;
-      top:0; bottom:0;
-      width:46px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border:0;
-      background:transparent;
-      color:#fff;
-      font-size:22px;
-      cursor:pointer;
-    }
-    .dateNav:active{transform:scale(.98); opacity:.9;}
-    .dateNav.left{left:0}
-    .dateNav.right{right:0}
+.card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:14px;
+  box-shadow:var(--shadow);
+  margin-bottom:10px;
+}
 
-    .todayBar{
-      height:40px;
-      background:var(--green);
-      color:#fff;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-weight:900;
-      letter-spacing:.6px;
-    }
+.addr{font-weight:900}
+.sub{font-size:13px;color:#666;margin-top:4px}
 
-    /* ===== TABS ===== */
-    .tabs{
-      display:flex;
-      border-bottom:1px solid var(--line);
-      background:#fff;
-      position:sticky;
-      top:67px;
-      z-index:4;
-    }
-    .tab{
-      flex:1;
-      text-align:center;
-      padding:14px;
-      font-size:18px;
-      color:#b3bcc7;
-      user-select:none;
-    }
-    .tab.active{
-      color:#000;
-      font-weight:900;
-      border-bottom:3px solid #000;
-    }
+.bottom{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:80px;
+  background:var(--blue);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:900;
+  font-size:20px;
+}
 
-    /* ===== CONTENT ===== */
-    .content{
-      padding:16px 14px 210px;
-      max-width:820px;
-      margin:0 auto;
-    }
+.modalWrap{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.4);
+  display:none;
+  align-items:flex-end;
+}
 
-    .rowTop{
-      display:flex;
-      gap:12px;
-      margin-bottom:14px;
-    }
-    .btnMain{
-      flex:1;
-      height:50px;
-      background:var(--green);
-      color:#fff;
-      border:0;
-      border-radius:10px;
-      font-size:17px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .btnMain:active{transform:scale(.99); opacity:.95;}
+.modal{
+  background:#fff;
+  width:100%;
+  border-top-left-radius:26px;
+  border-top-right-radius:26px;
+  padding:20px;
+  max-height:90vh;
+  overflow:auto;
+}
 
-    .btnSmall{
-      width:54px;
-      height:50px;
-      border:1px solid #d7e7db;
-      background:#fff;
-      border-radius:10px;
-      font-size:20px;
-      color:var(--green);
-      cursor:pointer;
-    }
-    .btnSmall:active{transform:scale(.99); background:#f3fff6;}
+.titleModal{
+  text-align:center;
+  font-size:26px;
+  font-weight:900;
+  color:var(--green);
+  margin-bottom:16px;
+}
 
-    .searchRow{
-      display:flex;
-      gap:12px;
-      margin-bottom:14px;
-    }
-    .searchBox{
-      flex:1;
-      height:48px;
-      border:2px solid #bfe5c9;
-      border-radius:14px;
-      display:flex;
-      align-items:center;
-      padding:0 14px;
-      font-size:17px;
-      background:#fff;
-    }
-    .searchBox input{
-      border:0;
-      outline:none;
-      width:100%;
-      font-size:17px;
-    }
-    .btnPlus{
-      width:44px;
-      height:44px;
-      border-radius:50%;
-      border:0;
-      background:var(--green);
-      color:#fff;
-      font-size:26px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .btnPlus:active{transform:scale(.98); opacity:.92;}
+.field{margin-bottom:14px}
+.label{font-weight:900;margin-bottom:6px}
+.input{
+  width:100%;
+  border:2px solid #E6EDF5;
+  border-radius:14px;
+  padding:14px;
+  font-size:16px;
+}
 
-    /* ===== LISTA ===== */
-    .listHeader{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      margin:14px 2px 10px;
-      gap:10px;
-    }
-    .listHeader h3{
-      margin:0;
-      font-size:16px;
-      color:#111;
-      letter-spacing:.2px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      font-size:13px;
-      color:#111;
-      background:#fff;
-      cursor:pointer;
-      user-select:none;
-    }
-    .pill:active{transform:scale(.99); background:#f6f8fc;}
-    .muted{color:var(--muted);}
+.select{
+  appearance:none;
+  width:100%;
+  border:2px solid #E6EDF5;
+  border-radius:14px;
+  padding:14px;
+  font-size:16px;
+  background:#fff;
+}
 
-    .cards{
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      box-shadow:var(--shadow);
-      padding:12px 12px 10px;
-    }
-    .cardTop{
-      display:flex;
-      justify-content:space-between;
-      align-items:flex-start;
-      gap:10px;
-      margin-bottom:6px;
-    }
-    .addr{
-      font-weight:900;
-      font-size:15px;
-      margin:0;
-    }
-    .sub{
-      margin:2px 0 0;
-      font-size:13px;
-      color:#56606b;
-    }
-    .badgeRow{
-      display:flex;
-      flex-wrap:wrap;
-      gap:6px;
-      margin-top:8px;
-    }
-    .badge{
-      font-size:12px;
-      padding:6px 8px;
-      border-radius:999px;
-      border:1px solid #dfe6ee;
-      background:#fff;
-      color:#111;
-      font-weight:800;
-    }
-    .badge.green{border-color:#bfe5c9; color:var(--green);}
-    .badge.blue{border-color:#cfe4ff; color:var(--blue);}
-    .badge.purple{border-color:#ead7ff; color:#7a3dbb;}
-    .badge.black{border-color:#d7dbe0; color:#111;}
-    .badge.red{border-color:#ffd3d1; color:var(--danger);}
+.createBtn{
+  width:100%;
+  height:56px;
+  border-radius:16px;
+  border:0;
+  background:var(--green);
+  color:#fff;
+  font-weight:900;
+  font-size:18px;
+}
 
-    .cardActions{
-      display:flex;
-      justify-content:flex-end;
-      gap:8px;
-      margin-top:10px;
-    }
-    .actionBtn{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:10px;
-      padding:8px 10px;
-      font-weight:900;
-      cursor:pointer;
-    }
-    .actionBtn:active{transform:scale(.99); background:#f6f8fc;}
-    .actionBtn.danger{border-color:#ffd3d1; color:var(--danger);}
+.picker{
+  height:200px;
+  overflow-y:scroll;
+  border-radius:16px;
+  border:2px solid #E6EDF5;
+}
 
-    /* ===== STATS ===== */
-    .statsRow{
-      position:fixed;
-      left:0;
-      right:0;
-      bottom:74px;
-      display:flex;
-      gap:12px;
-      padding:12px;
-      background:#fff;
-      border-top:1px solid var(--line);
-      z-index:3;
-    }
-    .stat{
-      flex:1;
-      border:2px solid var(--green);
-      border-radius:12px;
-      text-align:center;
-      padding:12px 6px;
-      font-weight:900;
-      color:var(--green);
-      font-size:14px;
-    }
+.picker div{
+  padding:12px;
+  text-align:center;
+  font-weight:900;
+  font-size:18px;
+}
 
-    /* ===== BOTTOM BAR ===== */
-    .bottomBar{
-      position:fixed;
-      left:0; right:0; bottom:0;
-      height:74px;
-      background:var(--blue);
-      display:flex;
-      z-index:3;
-    }
-    .bottomItem{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:12px;
-      font-weight:1000;
-      color:#fff;
-      user-select:none;
-      cursor:default;
-    }
-    .bottomItem + .bottomItem{
-      border-left:3px solid rgba(255,255,255,.75);
-    }
-    .ico{width:34px;height:34px;display:block;}
-    .num{font-size:28px; line-height:1;}
-    .people .ico *{fill:#b06ad7 !important; stroke:#b06ad7 !important;}
+.picker div:hover{
+  background:#F3F6FB;
+  cursor:pointer;
+}
 
-    /* ===== MODAL ===== */
-    .modalWrap{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,.35);
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      z-index:50;
-    }
-    .modal{
-      width:min(920px,100%);
-      max-height:92vh;
-      background:#fff;
-      border-top-left-radius:22px;
-      border-top-right-radius:22px;
-      overflow:auto;
-      padding:16px 16px 18px;
-    }
-    .modalTop{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      position:relative;
-      padding:6px 0 10px;
-    }
-    .modalTitle{
-      font-weight:1000;
-      color:var(--green);
-      font-size:26px;
-      margin:0;
-    }
-    .closeX{
-      position:absolute;
-      right:2px;
-      top:0px;
-      border:0;
-      background:transparent;
-      font-size:26px;
-      color:var(--green);
-      cursor:pointer;
-      padding:10px 12px;
-      border-radius:12px;
-    }
-    .closeX:active{transform:scale(.98); background:#f1fff5;}
-
-    .radioRow{
-      display:flex;
-      gap:14px;
-      justify-content:space-between;
-      margin:8px 0 12px;
-    }
-    .radio{
-      flex:1;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      border:1px solid var(--line);
-      padding:12px;
-      border-radius:14px;
-    }
-    .radio input{transform:scale(1.2)}
-    .radio label{font-weight:900}
-
-    .grid2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    .field{margin:10px 0 0;}
-    .label{
-      font-weight:900;
-      font-size:16px;
-      margin:0 0 8px;
-    }
-    .input, .select, .textarea{
-      width:100%;
-      border:2px solid #e6edf5;
-      border-radius:14px;
-      padding:14px 14px;
-      font-size:16px;
-      outline:none;
-      background:#fff;
-    }
-    .input:focus,.select:focus,.textarea:focus{border-color:#bfe5c9;}
-    .textarea{min-height:84px; resize:vertical;}
-
-    .typeList{
-      margin-top:8px;
-      border-top:1px solid var(--line);
-    }
-    .typeRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 4px;
-      border-bottom:1px solid var(--line);
-      gap:10px;
-    }
-    .typeLeft{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .typeName{
-      font-weight:900;
-      font-size:18px;
-    }
-    .check{
-      width:26px;
-      height:26px;
-      accent-color: var(--green);
-      transform:scale(1.1);
-    }
-
-    .attemptsRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 4px;
-      gap:10px;
-      border-bottom:1px solid var(--line);
-    }
-    .stepper{
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .stepBtn{
-      width:40px;
-      height:40px;
-      border-radius:999px;
-      border:0;
-      background:var(--green);
-      color:#fff;
-      font-size:22px;
-      font-weight:1000;
-      cursor:pointer;
-    }
-    .stepBtn:active{transform:scale(.98); opacity:.9;}
-    .stepVal{
-      width:64px;
-      text-align:center;
-      border:2px solid #e6edf5;
-      border-radius:12px;
-      padding:10px 8px;
-      font-weight:1000;
-      font-size:18px;
-    }
-
-    .modalFooter{
-      padding:14px 0 4px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:center;
-    }
-    .btnCreate{
-      width:180px;
-      height:56px;
-      border-radius:14px;
-      border:0;
-      font-weight:1000;
-      font-size:18px;
-      background:#d9d9d9;
-      color:#fff;
-      cursor:not-allowed;
-    }
-    .btnCreate.enabled{
-      background:var(--green);
-      cursor:pointer;
-    }
-    .btnCreate.enabled:active{transform:scale(.99); opacity:.95;}
-
-    .miniTools{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .toolBtn{
-      border:1px solid var(--line);
-      background:#fff;
-      padding:10px 12px;
-      border-radius:12px;
-      font-weight:900;
-      cursor:pointer;
-      user-select:none;
-    }
-    .toolBtn:active{transform:scale(.99); background:#f6f8fc;}
-    .toolBtn.danger{border-color:#ffd3d1; color:var(--danger);}
-    .hint{
-      font-size:12px;
-      color:#66707a;
-      margin-top:6px;
-      line-height:1.35;
-    }
-  </style>
+</style>
 </head>
 
 <body>
 
-  <!-- TOP -->
-  <div class="topbar">
-    <button class="iconBtn" id="btnMenu" title="Menu">☰</button>
-    <div class="title">Attività</div>
-    <button class="iconBtn" id="btnInfo" title="Info">ⓘ</button>
-  </div>
-  <div class="greenLine"></div>
+<div class="top"></div>
+<div class="header">Attività PRO</div>
 
-  <!-- DATE -->
-  <div class="datebar">
-    <button class="dateNav left" id="prevDay">‹</button>
-    <div id="dateLabel">—</div>
-    <button class="dateNav right" id="nextDay">›</button>
-  </div>
-  <div class="todayBar" id="todayBar">OGGI</div>
+<div class="content">
 
-  <!-- TABS -->
-  <div class="tabs">
-    <div class="tab active">Le mie Attività</div>
-    <div class="tab">Appuntamenti</div>
-  </div>
+<button class="btn" onclick="openModal()">+ Nuova Attività</button>
 
-  <!-- CONTENT -->
-  <div class="content">
+<div id="list"></div>
 
-    <div class="rowTop">
-      <button class="btnMain" id="openModal1">Aggiungi nuova via</button>
-      <button class="btnSmall" id="btnExport" title="Esporta backup">⧉</button>
-      <button class="btnSmall" id="btnMore" title="Altro">⋮</button>
-    </div>
+</div>
 
-    <div class="searchRow">
-      <div class="searchBox">
-        <input id="searchInput" placeholder="Cerca (via / città / note / nominativo)">
-      </div>
-      <button class="btnPlus" id="openModal2">+</button>
-    </div>
+<div class="bottom">
+Campanelli: <span id="counter">0</span>
+</div>
 
-    <div class="listHeader">
-      <h3>Attività del giorno <span class="muted" id="countLabel"></span></h3>
-      <div class="miniTools">
-        <div class="pill" id="btnToday">Vai a OGGI</div>
-        <div class="pill" id="btnClearSearch">Pulisci</div>
-      </div>
-    </div>
+<div class="modalWrap" id="modalWrap">
+<div class="modal">
+<div class="titleModal">Nuova Attività</div>
 
-    <div class="cards" id="cards"></div>
+<div class="field">
+<div class="label">Numero attività</div>
+<div class="picker" id="pickerNum"></div>
+</div>
 
-    <div style="height:10px"></div>
+<div class="field">
+<div class="label">Via</div>
+<input class="input" id="via">
+</div>
 
-    <div class="listHeader">
-      <h3>Backup</h3>
-      <div class="miniTools">
-        <div class="toolBtn" id="btnImport">Importa JSON</div>
-        <div class="toolBtn danger" id="btnWipeAll">RESET TUTTO</div>
-      </div>
-    </div>
-    <div class="hint">
-      • <b>Export</b> salva un file JSON sul telefono.<br>
-      • <b>Import</b> ricarica tutto da un JSON (utile se cambi telefono o vuoi sicurezza massima).<br>
-      • <b>RESET</b> cancella tutto (non farlo a caso 😅).
-    </div>
-  </div>
+<div class="field">
+<div class="label">Civico</div>
+<input class="input" id="civico">
+</div>
 
-  <!-- STATS -->
-  <div class="statsRow">
-    <div class="stat" id="statDemo">Demo: 0</div>
-    <div class="stat" id="statOrdini">Ordini: 0</div>
-    <div class="stat" id="statApp">Apparecchi: 0,00</div>
-  </div>
+<div class="field">
+<div class="label">Esito</div>
+<div class="picker" id="pickerEsito"></div>
+</div>
 
-  <!-- BOTTOM BAR -->
-  <div class="bottomBar">
-    <!-- tentativi (mano) -->
-    <div class="bottomItem">
-      <svg class="ico" viewBox="0 0 64 64">
-        <path fill="#fff" d="M22 30V16c0-2.2 1.8-4 4-4s4 1.8 4 4v14h2V14c0-2.2 1.8-4 4-4s4 1.8 4 4v16h2V18c0-2.2 1.8-4 4-4s4 1.8 4 4v20c0 9.9-8.1 18-18 18H28c-7.7 0-14-6.3-14-14V30c0-2.2 1.8-4 4-4s4 1.8 4 4v10h2V30z"/>
-        <path fill="#fff" d="M12 48h12v8H12c-2.2 0-4-1.8-4-4s1.8-4 4-4z"/>
-      </svg>
-      <span class="num" id="bAttempts">0</span>
-    </div>
+<div class="field" id="apptFields" style="display:none">
+<div class="label">Data appuntamento</div>
+<input class="input" type="date" id="dataApp">
+<div class="label">Ora</div>
+<input class="input" type="time" id="oraApp">
+</div>
 
-    <!-- campanelli (campana) -->
-    <div class="bottomItem">
-      <svg class="ico" viewBox="0 0 64 64">
-        <path fill="#fff" d="M32 58c3 0 5.5-2.3 5.9-5.2H26.1C26.5 55.7 29 58 32 58z"/>
-        <path fill="#fff" d="M52 46H12c-1.7 0-3-1.3-3-3 0-1.2.7-2.3 1.8-2.8l3.2-1.6V30c0-9.2 6.2-16.7 14-18.7V8c0-1.7 1.3-3 3-3s3 1.3 3 3v3.3c7.8 2 14 9.5 14 18.7v8.6l3.2 1.6c1.1.5 1.8 1.6 1.8 2.8 0 1.7-1.3 3-3 3z"/>
-      </svg>
-      <span class="num" id="bDoorbells">0</span>
-    </div>
+<button class="createBtn" onclick="save()">Salva</button>
 
-    <!-- cliente (icona custom) -->
-    <div class="bottomItem">
-      <svg class="ico" viewBox="0 0 64 64">
-        <rect x="18" y="10" width="18" height="14" rx="2" fill="#fff"/>
-        <rect x="40" y="12" width="12" height="10" rx="2" fill="#fff"/>
-        <circle cx="24" cy="33" r="8" fill="#fff"/>
-        <circle cx="44" cy="33" r="8" fill="#fff"/>
-        <rect x="14" y="44" width="24" height="12" rx="6" fill="#fff"/>
-        <rect x="34" y="44" width="20" height="12" rx="6" fill="#fff"/>
-      </svg>
-      <span class="num" id="bClienti">0</span>
-    </div>
-
-    <!-- entrato in casa (casa) -->
-    <div class="bottomItem">
-      <svg class="ico" viewBox="0 0 64 64">
-        <path fill="#fff" d="M8 30 32 10l24 20v26c0 2.2-1.8 4-4 4H12c-2.2 0-4-1.8-4-4V30z"/>
-      </svg>
-      <span class="num" id="bInCasa">0</span>
-    </div>
-
-    <!-- appuntamenti (calendario) -->
-    <div class="bottomItem">
-      <svg class="ico" viewBox="0 0 64 64">
-        <rect x="12" y="14" width="40" height="40" rx="4" fill="none" stroke="#fff" stroke-width="5"/>
-        <line x1="12" y1="24" x2="52" y2="24" stroke="#fff" stroke-width="5"/>
-        <path d="M24 40l6 6 12-14" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
-      </svg>
-      <span class="num" id="bAppunt">0</span>
-    </div>
-
-    <!-- parlato (persone viola) -->
-    <div class="bottomItem people">
-      <svg class="ico" viewBox="0 0 64 64">
-        <circle cx="18" cy="22" r="6"/>
-        <circle cx="32" cy="20" r="7"/>
-        <circle cx="46" cy="22" r="6"/>
-        <path d="M8 54c0-8 6-14 14-14s14 6 14 14H8z"/>
-        <path d="M22 54c0-9 7-16 16-16s16 7 16 16H22z"/>
-      </svg>
-      <span class="num" id="bParlato">0</span>
-    </div>
-  </div>
-
-  <!-- MODAL -->
-  <div class="modalWrap" id="modalWrap" aria-hidden="true">
-    <div class="modal">
-      <div class="modalTop">
-        <h2 class="modalTitle" id="modalTitle">Nuova Attività</h2>
-        <button class="closeX" id="closeModal">×</button>
-      </div>
-
-      <div class="radioRow">
-        <div class="radio">
-          <input type="radio" name="mode" id="modeSingle" checked>
-          <label for="modeSingle">Attività Singola</label>
-        </div>
-        <div class="radio">
-          <input type="radio" name="mode" id="modeMulti">
-          <label for="modeMulti">Attività Multiple</label>
-        </div>
-      </div>
-
-      <div class="grid2">
-        <div class="field">
-          <div class="label">Numero di attività</div>
-          <select class="select" id="numAtt">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>
-            <option>6</option><option>7</option><option>8</option><option>9</option><option>10</option>
-            <option>15</option><option>20</option><option>30</option>
-          </select>
-        </div>
-        <div class="field">
-          <div class="label">Città</div>
-          <input class="input" id="citta" placeholder="Es. Modena">
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">Indirizzo</div>
-        <input class="input" id="indirizzo" placeholder="Es. Via Roma">
-      </div>
-
-      <div class="grid2">
-        <div class="field">
-          <div class="label">Civico</div>
-          <input class="input" id="civico" placeholder="Es. 12">
-        </div>
-        <div class="field">
-          <div class="label">Piano, scala…</div>
-          <input class="input" id="piano" placeholder="Es. Scala B, 3°">
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">Fascia oraria</div>
-        <select class="select" id="fascia">
-          <option>Mattina</option>
-          <option>Pomeriggio</option>
-          <option selected>Sera</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <div class="label">Nominativo</div>
-        <input class="input" id="nominativo" placeholder="Nome (se lo hai)">
-      </div>
-
-      <div class="field">
-        <div class="label">Esito</div>
-        <select class="select" id="esito">
-          <option value="">Scegli</option>
-          <option>Non ha aperto</option>
-          <option>Non interessato</option>
-          <option>Da riprovare</option>
-          <option>Interessato</option>
-          <option>Appuntamento fissato</option>
-          <option>Cliente / Venduto</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <div class="label">Note</div>
-        <textarea class="textarea" id="note" placeholder="Es. cane, orari migliori, richieste, ecc."></textarea>
-      </div>
-
-      <div class="field">
-        <div class="label">Tipo attività</div>
-        <div class="typeList">
-          <div class="typeRow">
-            <div class="typeLeft">
-              <span style="font-size:22px">👥</span>
-              <span class="typeName">Parlato</span>
-            </div>
-            <input class="check" type="checkbox" id="tParlato">
-          </div>
-
-          <div class="typeRow">
-            <div class="typeLeft">
-              <span style="font-size:22px">📋</span>
-              <span class="typeName">Questionario</span>
-            </div>
-            <input class="check" type="checkbox" id="tQuestionario">
-          </div>
-
-          <div class="typeRow">
-            <div class="typeLeft">
-              <span style="font-size:22px">CL</span>
-              <span class="typeName">Cliente</span>
-            </div>
-            <input class="check" type="checkbox" id="tCliente">
-          </div>
-
-          <div class="typeRow">
-            <div class="typeLeft">
-              <span style="font-size:22px">🏠</span>
-              <span class="typeName">Entrato in casa</span>
-            </div>
-            <input class="check" type="checkbox" id="tCasa">
-          </div>
-
-          <div class="typeRow">
-            <div class="typeLeft">
-              <span style="font-size:22px">👫</span>
-              <span class="typeName">O.P.</span>
-            </div>
-            <input class="check" type="checkbox" id="tOP">
-          </div>
-
-          <div class="attemptsRow">
-            <div class="typeLeft">
-              <span style="font-size:22px">✋</span>
-              <span class="typeName">Ulteriori tentativi</span>
-            </div>
-            <div class="stepper">
-              <button class="stepBtn" id="decTry">−</button>
-              <div class="stepVal" id="tryVal">0</div>
-              <button class="stepBtn" id="incTry">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid2" style="margin-top:8px;">
-        <div class="field">
-          <div class="label">Modello VK</div>
-          <select class="select" id="modelloVk">
-            <option value="">Scegli</option>
-            <option>VK7</option>
-            <option>VK7 + VR7</option>
-            <option>Altro / Accessori</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <div class="label">Data appuntamento</div>
-          <input class="input" id="dataApp" type="date">
-        </div>
-      </div>
-
-      <div class="field">
-        <div class="label">Ora appuntamento</div>
-        <input class="input" id="oraApp" type="time">
-      </div>
-
-      <div class="modalFooter">
-        <button class="btnCreate" id="btnCreate">Crea</button>
-      </div>
-
-      <div class="hint">
-        Suggerimento: se vuoi usarlo come “registro campanelli”, ti basta compilare <b>Città</b> + <b>Indirizzo</b> + <b>Numero attività</b> e premere <b>Crea</b>.
-      </div>
-    </div>
-  </div>
+</div>
+</div>
 
 <script>
-/* =========================
-   STORAGE (anti-perdita)
-========================= */
-const STORAGE_KEY = "folletto_mya_clone_v1";
-const BACKUP_KEY  = "folletto_mya_clone_v1_backup";
 
-function loadDB(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(raw) return JSON.parse(raw);
-  }catch(e){}
-  // fallback su backup interno
-  try{
-    const rawB = localStorage.getItem(BACKUP_KEY);
-    if(rawB) return JSON.parse(rawB);
-  }catch(e){}
-  return { version:1, activities:[] };
-}
+const STORAGE="mya_pro_v1";
+let db=JSON.parse(localStorage.getItem(STORAGE)||'{"activities":[]}');
 
-function saveDB(){
-  const payload = JSON.stringify(db);
-  localStorage.setItem(STORAGE_KEY, payload);
-  localStorage.setItem(BACKUP_KEY, payload);
-}
-
-/* =========================
-   DATE STATE
-========================= */
-let db = loadDB();
-let selectedDate = new Date(); // giorno in vista
-selectedDate.setHours(0,0,0,0);
-
-function fmtDateIT(d){
-  const days = ["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
-  const months = ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
-  return `${days[d.getDay()]} ${String(d.getDate()).padStart(2,"0")} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
-function ymd(d){
-  const x = new Date(d);
-  x.setHours(0,0,0,0);
-  return x.toISOString().slice(0,10);
-}
-function isToday(d){
-  const t = new Date(); t.setHours(0,0,0,0);
-  return ymd(d) === ymd(t);
-}
-
-/* =========================
-   UI HOOKS
-========================= */
-const dateLabel = document.getElementById("dateLabel");
-const todayBar  = document.getElementById("todayBar");
-const prevDay   = document.getElementById("prevDay");
-const nextDay   = document.getElementById("nextDay");
-const btnToday  = document.getElementById("btnToday");
-
-const cards     = document.getElementById("cards");
-const searchInput = document.getElementById("searchInput");
-const btnClearSearch = document.getElementById("btnClearSearch");
-const countLabel = document.getElementById("countLabel");
-
-/* bottom counters */
-const bAttempts  = document.getElementById("bAttempts");
-const bDoorbells = document.getElementById("bDoorbells");
-const bClienti   = document.getElementById("bClienti");
-const bInCasa    = document.getElementById("bInCasa");
-const bAppunt    = document.getElementById("bAppunt");
-const bParlato   = document.getElementById("bParlato");
-
-/* stats row (placeholders, ma li aggiorno in base ai flag) */
-const statDemo  = document.getElementById("statDemo");
-const statOrdini = document.getElementById("statOrdini");
-const statApp   = document.getElementById("statApp");
-
-/* modal */
-const modalWrap = document.getElementById("modalWrap");
-const openModal1 = document.getElementById("openModal1");
-const openModal2 = document.getElementById("openModal2");
-const closeModal = document.getElementById("closeModal");
-const btnCreate  = document.getElementById("btnCreate");
-const modalTitle = document.getElementById("modalTitle");
-
-/* form fields */
-const numAtt = document.getElementById("numAtt");
-const citta = document.getElementById("citta");
-const indirizzo = document.getElementById("indirizzo");
-const civico = document.getElementById("civico");
-const piano = document.getElementById("piano");
-const fascia = document.getElementById("fascia");
-const nominativo = document.getElementById("nominativo");
-const esito = document.getElementById("esito");
-const note = document.getElementById("note");
-const tParlato = document.getElementById("tParlato");
-const tQuestionario = document.getElementById("tQuestionario");
-const tCliente = document.getElementById("tCliente");
-const tCasa = document.getElementById("tCasa");
-const tOP = document.getElementById("tOP");
-const modelloVk = document.getElementById("modelloVk");
-const dataApp = document.getElementById("dataApp");
-const oraApp = document.getElementById("oraApp");
-
-const decTry = document.getElementById("decTry");
-const incTry = document.getElementById("incTry");
-const tryVal = document.getElementById("tryVal");
-
-let editingId = null;
-
-/* =========================
-   MODAL OPEN/CLOSE
-========================= */
-function openModal(editActivity=null){
-  modalWrap.style.display = "flex";
-  modalWrap.setAttribute("aria-hidden","false");
-
-  if(editActivity){
-    editingId = editActivity.id;
-    modalTitle.textContent = "Modifica Attività";
-    numAtt.value = String(editActivity.numAtt || 1);
-    citta.value = editActivity.citta || "";
-    indirizzo.value = editActivity.indirizzo || "";
-    civico.value = editActivity.civico || "";
-    piano.value = editActivity.piano || "";
-    fascia.value = editActivity.fascia || "Sera";
-    nominativo.value = editActivity.nominativo || "";
-    esito.value = editActivity.esito || "";
-    note.value = editActivity.note || "";
-    tParlato.checked = !!editActivity.types?.parlato;
-    tQuestionario.checked = !!editActivity.types?.questionario;
-    tCliente.checked = !!editActivity.types?.cliente;
-    tCasa.checked = !!editActivity.types?.inCasa;
-    tOP.checked = !!editActivity.types?.op;
-    tryVal.textContent = String(editActivity.extraTries || 0);
-    modelloVk.value = editActivity.modelloVk || "";
-    dataApp.value = editActivity.dataApp || "";
-    oraApp.value = editActivity.oraApp || "";
-  } else {
-    editingId = null;
-    modalTitle.textContent = "Nuova Attività";
-    numAtt.value = "1";
-    citta.value = "";
-    indirizzo.value = "";
-    civico.value = "";
-    piano.value = "";
-    fascia.value = "Sera";
-    nominativo.value = "";
-    esito.value = "";
-    note.value = "";
-    tParlato.checked = false;
-    tQuestionario.checked = false;
-    tCliente.checked = false;
-    tCasa.checked = false;
-    tOP.checked = false;
-    tryVal.textContent = "0";
-    modelloVk.value = "";
-    dataApp.value = "";
-    oraApp.value = "";
-  }
-  validateCreate();
-}
-function closeModalFn(){
-  modalWrap.style.display = "none";
-  modalWrap.setAttribute("aria-hidden","true");
-}
-openModal1.addEventListener("click",()=>openModal());
-openModal2.addEventListener("click",()=>openModal());
-closeModal.addEventListener("click",closeModalFn);
-modalWrap.addEventListener("click",(e)=>{
-  if(e.target === modalWrap) closeModalFn();
-});
-
-/* =========================
-   STEPPER
-========================= */
-function setTries(v){
-  const n = Math.max(0, Math.min(999, v));
-  tryVal.textContent = String(n);
-}
-decTry.addEventListener("click",()=>setTries(parseInt(tryVal.textContent,10)-1));
-incTry.addEventListener("click",()=>setTries(parseInt(tryVal.textContent,10)+1));
-
-/* =========================
-   CREATE ENABLE
-========================= */
-function validateCreate(){
-  const ok = (citta.value.trim().length>0 || indirizzo.value.trim().length>0); // almeno uno
-  btnCreate.classList.toggle("enabled", ok);
-  btnCreate.disabled = !ok;
-  btnCreate.style.cursor = ok ? "pointer" : "not-allowed";
-}
-[citta, indirizzo, numAtt, esito, note, nominativo].forEach(el=>{
-  el.addEventListener("input", validateCreate);
-  el.addEventListener("change", validateCreate);
-});
-
-/* =========================
-   SAVE ACTIVITY
-========================= */
-function uid(){
-  return "a_" + Math.random().toString(16).slice(2) + "_" + Date.now().toString(16);
-}
-
-btnCreate.addEventListener("click", ()=>{
-  if(btnCreate.disabled) return;
-
-  const activity = {
-    id: editingId || uid(),
-    date: ymd(selectedDate),
-    createdAt: Date.now(),
-    numAtt: parseInt(numAtt.value,10) || 1,
-    citta: citta.value.trim(),
-    indirizzo: indirizzo.value.trim(),
-    civico: civico.value.trim(),
-    piano: piano.value.trim(),
-    fascia: fascia.value,
-    nominativo: nominativo.value.trim(),
-    esito: esito.value,
-    note: note.value.trim(),
-    types:{
-      parlato: tParlato.checked,
-      questionario: tQuestionario.checked,
-      cliente: tCliente.checked,
-      inCasa: tCasa.checked,
-      op: tOP.checked
-    },
-    extraTries: parseInt(tryVal.textContent,10) || 0,
-    modelloVk: modelloVk.value,
-    dataApp: dataApp.value,
-    oraApp: oraApp.value
-  };
-
-  if(editingId){
-    const idx = db.activities.findIndex(x=>x.id===editingId);
-    if(idx !== -1) db.activities[idx] = activity;
-  } else {
-    db.activities.push(activity);
-  }
-
-  saveDB();
-  closeModalFn();
-  render();
-});
-
-/* =========================
-   RENDER
-========================= */
-function matchesSearch(a, q){
-  if(!q) return true;
-  const s = q.toLowerCase();
-  const hay = [
-    a.citta, a.indirizzo, a.civico, a.piano, a.nominativo, a.esito, a.note, a.fascia, a.modelloVk
-  ].filter(Boolean).join(" ").toLowerCase();
-  return hay.includes(s);
-}
-
-function computeCounters(list){
-  let doorbells = 0;
-  let extra = 0;
-  let parlato = 0;
-  let inCasa = 0;
-  let clienti = 0;
-  let appunt = 0;
-  let demo = 0;   // placeholder: demo = entrato in casa
-  let ordini = 0; // placeholder: cliente/venduto
-  let apparecchi = 0; // placeholder: num attività cliente (solo per UI)
-
-  for(const a of list){
-    doorbells += (a.numAtt || 0);
-    extra += (a.extraTries || 0);
-    if(a.types?.parlato) parlato++;
-    if(a.types?.inCasa) { inCasa++; demo++; }
-    if(a.types?.cliente) { clienti++; ordini++; apparecchi += (a.numAtt||0); }
-    if(a.esito === "Appuntamento fissato" || a.dataApp || a.oraApp) appunt++;
-  }
-
-  return {
-    attempts: extra,
-    doorbells,
-    parlato,
-    inCasa,
-    clienti,
-    appunt,
-    demo,
-    ordini,
-    apparecchi
-  };
-}
-
-function badgeFor(a){
-  const out = [];
-  if(a.types?.parlato) out.push({t:"Parlato", c:"purple"});
-  if(a.types?.questionario) out.push({t:"Questionario", c:"blue"});
-  if(a.types?.cliente) out.push({t:"Cliente", c:"black"});
-  if(a.types?.inCasa) out.push({t:"Entrato in casa", c:"green"});
-  if(a.types?.op) out.push({t:"O.P.", c:"blue"});
-  if((a.extraTries||0) > 0) out.push({t:`+${a.extraTries} tentativi`, c:"red"});
-  if(a.esito) out.push({t:a.esito, c: a.esito.includes("Cliente") ? "green" : "black"});
-  if(a.dataApp) out.push({t:`App: ${a.dataApp}${a.oraApp?(" "+a.oraApp):""}`, c:"blue"});
-  if(a.modelloVk) out.push({t:a.modelloVk, c:"black"});
-  return out;
-}
+let activeVia=null;
+let selectedNum=1;
+let selectedEsito="Assente";
 
 function render(){
-  // header date
-  dateLabel.textContent = fmtDateIT(selectedDate);
-  todayBar.style.display = isToday(selectedDate) ? "flex" : "none";
+  const list=document.getElementById("list");
+  list.innerHTML="";
+  let count=0;
 
-  const q = searchInput.value.trim();
-  const dayKey = ymd(selectedDate);
-  const dayListAll = db.activities
-    .filter(a => a.date === dayKey)
-    .sort((a,b)=> (b.createdAt||0)-(a.createdAt||0));
+  db.activities.forEach(a=>{
+    const div=document.createElement("div");
+    div.className="card";
+    div.innerHTML=`
+      <div class="addr">${a.via} ${a.civico}</div>
+      <div class="sub">Esito: ${a.esito}</div>
+    `;
+    list.appendChild(div);
+    count+=a.num;
+  });
 
-  const dayList = dayListAll.filter(a => matchesSearch(a,q));
+  document.getElementById("counter").textContent=count;
+}
 
-  countLabel.textContent = `(${dayListAll.length})`;
+function openModal(){
+  document.getElementById("modalWrap").style.display="flex";
 
-  // cards
-  cards.innerHTML = "";
-  if(dayList.length === 0){
-    const empty = document.createElement("div");
-    empty.className = "hint";
-    empty.style.padding = "8px 2px";
-    empty.innerHTML = q
-      ? `Niente risultati per “<b>${escapeHtml(q)}</b>” in questo giorno.`
-      : `Ancora niente attività per questo giorno. Premi <b>+</b> e segna i campanelli.`;
-    cards.appendChild(empty);
-  } else {
-    for(const a of dayList){
-      const c = document.createElement("div");
-      c.className = "card";
-
-      const addrLine = [a.indirizzo, a.civico].filter(Boolean).join(" ");
-      const cityLine = [a.citta, a.piano ? ("• " + a.piano) : "", a.fascia ? ("• " + a.fascia) : ""].filter(Boolean).join(" ");
-
-      c.innerHTML = `
-        <div class="cardTop">
-          <div>
-            <p class="addr">${escapeHtml(addrLine || "(senza indirizzo)")}</p>
-            <p class="sub">${escapeHtml(cityLine || "")}</p>
-            <p class="sub"><b>Campanelli:</b> ${a.numAtt || 0}${a.extraTries?` • <b>Tentativi extra:</b> ${a.extraTries}`:""}${a.nominativo?` • <b>Nome:</b> ${escapeHtml(a.nominativo)}`:""}</p>
-            ${a.note ? `<p class="sub"><b>Note:</b> ${escapeHtml(a.note)}</p>` : ``}
-            <div class="badgeRow">
-              ${badgeFor(a).map(b=>`<span class="badge ${b.c}">${escapeHtml(b.t)}</span>`).join("")}
-            </div>
-          </div>
-        </div>
-
-        <div class="cardActions">
-          <button class="actionBtn" data-act="edit" data-id="${a.id}">Modifica</button>
-          <button class="actionBtn danger" data-act="del" data-id="${a.id}">Elimina</button>
-        </div>
-      `;
-      cards.appendChild(c);
-    }
+  if(activeVia){
+    document.getElementById("via").value=activeVia;
   }
 
-  // counters (solo su attività del giorno, non filtrate da search)
-  const ctr = computeCounters(dayListAll);
-  bAttempts.textContent  = String(ctr.attempts);
-  bDoorbells.textContent = String(ctr.doorbells);
-  bClienti.textContent   = String(ctr.clienti);
-  bInCasa.textContent    = String(ctr.inCasa);
-  bAppunt.textContent    = String(ctr.appunt);
-  bParlato.textContent   = String(ctr.parlato);
+  buildPickers();
+}
 
-  statDemo.textContent   = `Demo: ${ctr.demo}`;
-  statOrdini.textContent = `Ordini: ${ctr.ordini}`;
-  statApp.textContent    = `Apparecchi: ${String(ctr.apparecchi).replace(".",",")}`;
+function buildPickers(){
 
-  // bind actions
-  document.querySelectorAll("[data-act]").forEach(btn=>{
-    btn.addEventListener("click", ()=>{
-      const id = btn.getAttribute("data-id");
-      const act = btn.getAttribute("data-act");
-      const a = db.activities.find(x=>x.id===id);
-      if(!a) return;
+  const pickerNum=document.getElementById("pickerNum");
+  pickerNum.innerHTML="";
+  [1,2,3,4,5,6,7,8,9,10,15,20,30].forEach(n=>{
+    const d=document.createElement("div");
+    d.textContent=n;
+    d.onclick=()=>selectedNum=n;
+    pickerNum.appendChild(d);
+  });
 
-      if(act === "edit"){
-        // se stai guardando un altro giorno, porta quel giorno
-        selectedDate = new Date(a.date + "T00:00:00");
-        openModal(a);
-      } else if(act === "del"){
-        if(confirm("Elimino questa attività?")){
-          db.activities = db.activities.filter(x=>x.id!==id);
-          saveDB();
-          render();
-        }
+  const pickerEsito=document.getElementById("pickerEsito");
+  pickerEsito.innerHTML="";
+  const esiti=[
+    "Assente",
+    "Ripassare",
+    "Appuntamento",
+    "Non interessato",
+    "App. Dim. Diretta"
+  ];
+
+  esiti.forEach(e=>{
+    const d=document.createElement("div");
+    d.textContent=e;
+    d.onclick=()=>{
+      selectedEsito=e;
+      if(e==="Appuntamento"){
+        document.getElementById("apptFields").style.display="block";
+      }else{
+        document.getElementById("apptFields").style.display="none";
       }
-    });
+    };
+    pickerEsito.appendChild(d);
   });
 }
 
-function escapeHtml(s){
-  return String(s).replace(/[&<>"']/g, m => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
-  }[m]));
+function save(){
+
+  const via=document.getElementById("via").value.trim();
+  const civico=document.getElementById("civico").value.trim();
+
+  if(!via || !civico) return;
+
+  activeVia=via;
+
+  db.activities.push({
+    via,
+    civico,
+    num:selectedNum,
+    esito:selectedEsito,
+    data:document.getElementById("dataApp").value,
+    ora:document.getElementById("oraApp").value
+  });
+
+  localStorage.setItem(STORAGE,JSON.stringify(db));
+
+  document.getElementById("modalWrap").style.display="none";
+  document.getElementById("civico").value="";
+  render();
 }
 
-/* =========================
-   DATE NAV
-========================= */
-prevDay.addEventListener("click", ()=>{
-  selectedDate = new Date(selectedDate.getTime() - 86400000);
-  selectedDate.setHours(0,0,0,0);
-  render();
-});
-nextDay.addEventListener("click", ()=>{
-  selectedDate = new Date(selectedDate.getTime() + 86400000);
-  selectedDate.setHours(0,0,0,0);
-  render();
-});
-btnToday.addEventListener("click", ()=>{
-  selectedDate = new Date();
-  selectedDate.setHours(0,0,0,0);
-  render();
-});
-
-/* =========================
-   SEARCH
-========================= */
-searchInput.addEventListener("input", render);
-btnClearSearch.addEventListener("click", ()=>{
-  searchInput.value = "";
-  render();
-});
-
-/* =========================
-   EXPORT / IMPORT / RESET
-========================= */
-document.getElementById("btnExport").addEventListener("click", exportJSON);
-document.getElementById("btnMore").addEventListener("click", ()=>{
-  alert("Tip: usa Export/Import per non perdere MAI nulla. Se vuoi, ti aggiungo anche sincronizzazione cloud (Drive) in una versione avanzata.");
-});
-
-function exportJSON(){
-  const blob = new Blob([JSON.stringify(db, null, 2)], {type:"application/json"});
-  const a = document.createElement("a");
-  const stamp = new Date().toISOString().slice(0,10);
-  a.href = URL.createObjectURL(blob);
-  a.download = `attivita_backup_${stamp}.json`;
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(()=>{
-    URL.revokeObjectURL(a.href);
-    a.remove();
-  }, 0);
-}
-
-document.getElementById("btnImport").addEventListener("click", ()=>{
-  const inp = document.createElement("input");
-  inp.type = "file";
-  inp.accept = "application/json";
-  inp.onchange = async ()=>{
-    const file = inp.files?.[0];
-    if(!file) return;
-    try{
-      const text = await file.text();
-      const parsed = JSON.parse(text);
-      if(!parsed || !Array.isArray(parsed.activities)) throw new Error("Formato non valido");
-      db = parsed;
-      saveDB();
-      render();
-      alert("Import completato ✅");
-    }catch(e){
-      alert("Import fallito: file non valido.");
-    }
-  };
-  inp.click();
-});
-
-document.getElementById("btnWipeAll").addEventListener("click", ()=>{
-  const ok = prompt("Scrivi RESET per cancellare TUTTO:");
-  if(ok === "RESET"){
-    db = {version:1, activities:[]};
-    saveDB();
-    render();
-    alert("Cancellato.");
-  }
-});
-
-/* =========================
-   INIT
-========================= */
 render();
+
 </script>
 
 </body>

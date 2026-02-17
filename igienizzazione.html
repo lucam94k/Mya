@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Igienizzazione Materasso a Domicilio | Modena</title>
+  <meta name="description" content="Igienizzazione materasso a domicilio a Modena: test acari/polveri, rimozione allergeni, dimostrazione gratuita su appuntamento. Posti limitati." />
+
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --card:#111522;
+      --card2:#0f1420;
+      --text:#f6f7fb;
+      --muted:#b8c0cc;
+      --line:rgba(255,255,255,.08);
+      --accent:#22c55e;    /* WhatsApp vibe */
+      --accent2:#60a5fa;   /* Trust vibe */
+      --warn:#fbbf24;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(96,165,250,.25), transparent 60%),
+        radial-gradient(900px 500px at 85% 0%, rgba(34,197,94,.18), transparent 60%),
+        radial-gradient(1000px 600px at 40% 110%, rgba(251,191,36,.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+    }
+
+    a{color:inherit}
+    .wrap{max-width:1100px;margin:0 auto;padding:22px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:14px;
+      padding:14px 16px;border:1px solid var(--line);border-radius:999px;
+      background:rgba(255,255,255,.03);backdrop-filter: blur(10px);
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .dot{width:10px;height:10px;border-radius:99px;background:linear-gradient(135deg,var(--accent2),var(--accent))}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .chip{
+      font-size:13px;color:var(--muted);
+      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
+      background:rgba(255,255,255,.02);
+      white-space:nowrap
+    }
+
+    .hero{
+      display:grid;grid-template-columns: 1.05fr .95fr;
+      gap:16px;margin-top:18px;
+    }
+    @media(max-width:900px){ .hero{grid-template-columns:1fr} }
+
+    .panel{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .pad{padding:22px}
+
+    h1{margin:0 0 10px;font-size:40px;line-height:1.05}
+    @media(max-width:520px){h1{font-size:34px}}
+    .subtitle{margin:0 0 16px;font-size:18px;line-height:1.45;color:var(--muted)}
+
+    .bullets{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0 6px}
+    @media(max-width:520px){.bullets{grid-template-columns:1fr}}
+    .b{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px 12px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(0,0,0,.18);
+    }
+    .icon{
+      width:34px;height:34px;border-radius:12px;
+      background:rgba(34,197,94,.15);
+      display:flex;align-items:center;justify-content:center;
+      font-weight:900;color:var(--accent);
+      border:1px solid rgba(34,197,94,.25);
+      flex:0 0 auto;
+    }
+    .b small{display:block;color:var(--muted);margin-top:2px;line-height:1.3}
+    .b strong{font-size:14px}
+
+    .ctaRow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:14px 16px;border-radius:14px;
+      font-weight:900;text-decoration:none;
+      border:1px solid var(--line);
+      transition: transform .08s ease, filter .15s ease;
+      user-select:none;
+    }
+    .btn:active{transform:scale(.98)}
+    .btnwa{
+      background:linear-gradient(135deg, rgba(34,197,94,.9), rgba(34,197,94,.65));
+      color:#08130b;border-color:rgba(34,197,94,.35);
+    }
+    .btnsec{
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+    .btn:hover{filter:brightness(1.08)}
+
+    .mini{
+      display:flex;gap:10px;flex-wrap:wrap;margin-top:14px
+    }
+    .badge{
+      font-size:13px;color:var(--muted);
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      display:flex;gap:10px;align-items:center;
+    }
+    .star{color:var(--warn);font-weight:900}
+    .bar{
+      margin-top:16px;
+      border-top:1px solid var(--line);
+      padding-top:14px;
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between
+    }
+    .counter{
+      display:flex;gap:10px;align-items:center;flex-wrap:wrap
+    }
+    .pill{
+      border:1px solid rgba(251,191,36,.25);
+      background:rgba(251,191,36,.10);
+      color:#ffe8a3;
+      padding:10px 12px;border-radius:999px;font-weight:800;
+    }
+    .note{color:var(--muted);font-size:13px;line-height:1.35;max-width:520px}
+
+    /* Right form */
+    .formTitle{font-size:18px;margin:0 0 4px;font-weight:900}
+    .formSub{margin:0 0 16px;color:var(--muted);font-size:14px;line-height:1.4}
+
+    label{display:block;font-size:13px;color:var(--muted);margin:10px 0 6px}
+    input,select,textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.22);
+      color:var(--text);
+      font-size:16px;
+      outline:none;
+    }
+    textarea{min-height:92px;resize:vertical}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:520px){.grid2{grid-template-columns:1fr}}
+
+    .submit{
+      width:100%;
+      margin-top:12px;
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid rgba(96,165,250,.25);
+      background:linear-gradient(135deg, rgba(96,165,250,.85), rgba(96,165,250,.55));
+      color:#081018;
+      font-weight:1000;
+      font-size:16px;
+      cursor:pointer;
+    }
+    .ok{
+      display:none;margin-top:12px;
+      padding:12px;border-radius:14px;
+      border:1px solid rgba(34,197,94,.28);
+      background:rgba(34,197,94,.10);
+      color:#c9f7d9;
+      font-weight:800;
+    }
+
+    /* FAQ */
+    .faq{margin-top:16px}
+    details{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:12px 14px;
+      margin-top:10px;
+    }
+    summary{cursor:pointer;font-weight:900}
+    details p{margin:10px 0 0;color:var(--muted);line-height:1.45}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand"><span class="dot"></span> Igiene Casa • Modena</div>
+      <div class="chips">
+        <div class="chip">✅ A domicilio</div>
+        <div class="chip">✅ Test polveri/acari</div>
+        <div class="chip">✅ Solo su appuntamento</div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <!-- LEFT -->
+      <section class="panel">
+        <div class="pad">
+          <h1>Offerta “Igienizzazione Materasso” a Domicilio</h1>
+          <p class="subtitle">
+            Rimuoviamo <b>polveri, acari e allergeni invisibili</b> dal materasso con un trattamento dimostrativo.
+            Ideale per <b>allergie</b>, <b>bambini</b>, <b>animali</b> e chi vuole dormire meglio.
+          </p>
+
+          <div class="bullets">
+            <div class="b">
+              <div class="icon">✓</div>
+              <div>
+                <strong>Test sporco in tempo reale</strong>
+                <small>Vedi con i tuoi occhi cosa esce dal materasso.</small>
+              </div>
+            </div>
+            <div class="b">
+              <div class="icon">✓</div>
+              <div>
+                <strong>Appuntamento veloce</strong>
+                <small>Conferma in 30 secondi su WhatsApp.</small>
+              </div>
+            </div>
+            <div class="b">
+              <div class="icon">✓</div>
+              <div>
+                <strong>Zero prodotti chimici</strong>
+                <small>Trattamento a secco, adatto a casa e famiglia.</small>
+              </div>
+            </div>
+            <div class="b">
+              <div class="icon">✓</div>
+              <div>
+                <strong>Consigli personalizzati</strong>
+                <small>Se vuoi, ti spieghiamo come mantenere l’igiene nel tempo.</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="ctaRow">
+            <a class="btn btnwa" id="waBtn" href="#" target="_blank" rel="noopener">
+              📲 Prenota su WhatsApp
+            </a>
+            <a class="btn btnsec" href="#prenota">📩 Preferisco essere richiamato</a>
+          </div>
+
+          <div class="mini">
+            <div class="badge"><span class="star">★</span> Risposta rapida</div>
+            <div class="badge">🛡️ Operatori verificati</div>
+            <div class="badge">📍 Modena & provincia</div>
+          </div>
+
+          <div class="bar">
+            <div class="counter">
+              <div class="pill" id="slotsPill">⏳ Posti disponibili: 8</div>
+              <div class="note">
+                Nota: per mantenere la qualità, gli appuntamenti settimanali sono limitati. Se oggi vedi posto, prenotalo.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq">
+            <details>
+              <summary>Quanto dura l’intervento?</summary>
+              <p>Di solito 25–45 minuti (dipende dal materasso e dal livello di sporco). Possiamo anche fare test su cuscini/divano.</p>
+            </details>
+            <details>
+              <summary>È davvero gratuito?</summary>
+              <p>È una dimostrazione su appuntamento. Se ti interessa, possiamo spiegarti il metodo e le soluzioni per mantenere il risultato nel tempo.</p>
+            </details>
+            <details>
+              <summary>Serve preparare qualcosa?</summary>
+              <p>No. Basta accesso al letto e una presa di corrente vicina. Se hai animali, nessun problema.</p>
+            </details>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <section class="panel" id="prenota">
+        <div class="pad">
+          <p class="formTitle">Richiedi appuntamento (richiamata)</p>
+          <p class="formSub">Ti contattiamo per confermare giorno e fascia oraria. Inserisci 3 dati e fine.</p>
+
+          <form id="leadForm">
+            <div class="grid2">
+              <div>
+                <label>Nome</label>
+                <input name="nome" placeholder="Es. Luca" required />
+              </div>
+              <div>
+                <label>Telefono</label>
+                <input name="telefono" placeholder="Es. 3331234567" required />
+              </div>
+            </div>
+
+            <div class="grid2">
+              <div>
+                <label>Zona</label>
+                <input name="zona" placeholder="Modena, Carpi, Formigine..." required />
+              </div>
+              <div>
+                <label>Fascia oraria preferita</label>
+                <select name="fascia" required>
+                  <option value="">Scegli…</option>
+                  <option>Mattina (9-12)</option>
+                  <option>Pomeriggio (14-18)</option>
+                  <option>Sera (18-20)</option>
+                </select>
+              </div>
+            </div>
+
+            <label>Nota (opzionale)</label>
+            <textarea name="nota" placeholder="Allergie, bambini, animali, materasso matrimoniale/singolo…"></textarea>
+
+            <button class="submit" type="submit">✅ Blocca il tuo posto</button>
+            <div class="ok" id="okBox">Perfetto! Richiesta inviata. Ti contattiamo a breve. ✅</div>
+          </form>
+
+          <p class="formSub" style="margin-top:14px;">
+            Compilando accetti di essere ricontattato per il servizio richiesto. Nessun obbligo.
+          </p>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+<script>
+  // ✅ METTI QUI IL TUO NUMERO WhatsApp in formato internazionale (es: 393331234567)
+  const WHATSAPP_NUMBER = "39XXXXXXXXXX";
+
+  // ✅ Posti disponibili (puoi cambiarli quando vuoi)
+  const SLOTS = 8;
+
+  // ✅ FORM: invio su email via FormSubmit (zero backend)
+  // Vai su formsubmit.co e conferma la tua email.
+  // Poi sostituisci qui sotto:
+  const FORM_ACTION = "https://formsubmit.co/LA_TUA_EMAIL";
+
+  // CTA WhatsApp con messaggio “guidato” (più conversione)
+  const waText = encodeURIComponent(
+    "Ciao! Vorrei prenotare l’offerta igienizzazione materasso a Modena.\n" +
+    "Zona: ____\n" +
+    "Tipo: singolo/matrimoniale\n" +
+    "Fascia oraria: mattina/pomeriggio/sera"
+  );
+  document.getElementById("waBtn").href = `https://wa.me/${WHATSAPP_NUMBER}?text=${waText}`;
+
+  // Posti pill
+  document.getElementById("slotsPill").textContent = `⏳ Posti disponibili: ${SLOTS}`;
+
+  // Submit form via fetch (no redirect)
+  const form = document.getElementById("leadForm");
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const data = new FormData(form);
+    data.append("_subject", "Nuovo lead - Igienizzazione Materasso");
+    data.append("_captcha", "false");
+
+    try{
+      const res = await fetch(FORM_ACTION, { method: "POST", body: data });
+      if(res.ok){
+        document.getElementById("okBox").style.display = "block";
+        form.reset();
+      }else{
+        alert("Errore invio. Scrivimi su WhatsApp.");
+      }
+    }catch{
+      alert("Errore rete. Scrivimi su WhatsApp.");
+    }
+  });
+</script>
+</body>
+</html>

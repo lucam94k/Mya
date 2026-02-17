@@ -186,6 +186,50 @@
     summary{cursor:pointer;font-weight:900}
     details p{margin:10px 0 0;color:var(--muted);line-height:1.45}
 
+    /* === VIDEO HERO === */
+    .videoHero{
+      position:relative;
+      margin-bottom:24px;
+      border-radius:20px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      box-shadow:0 30px 80px rgba(0,0,0,.6);
+    }
+    .videoWrapper{
+      position:relative;
+      padding-top:56.25%;
+    }
+    .videoWrapper iframe{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:100%;
+      border:0;
+    }
+    .videoOverlay{
+      position:absolute;
+      inset:0;
+      background:linear-gradient(to bottom, rgba(0,0,0,.62), rgba(0,0,0,.38));
+      display:flex;
+      align-items:flex-end;
+      padding:24px;
+      pointer-events:none;
+    }
+    .videoOverlay h2{
+      font-size:28px;
+      margin:0;
+      font-weight:1000;
+      line-height:1.1;
+    }
+    .videoOverlay span{
+      display:block;
+      margin-top:6px;
+      color:#cbd5e1;
+      font-weight:600;
+      font-size:14px;
+    }
+
     /* === WOW IMAGES === */
     .wowImages{
       display:grid;
@@ -288,18 +332,26 @@
 
 <body>
   <div class="wrap">
+
+    <!-- VIDEO HERO IN ALTO -->
     <div class="videoHero fadeUp">
-  <div class="videoWrapper">
-    <iframe 
-      src="https://www.youtube.com/embed/QIMM20bA6Zs?rel=0&modestbranding=1" 
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-      allowfullscreen>
-    </iframe>
-  </div>
-</div>
+      <div class="videoWrapper">
+        <iframe
+          src="https://www.youtube.com/embed/QIMM20bA6Zs?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1"
+          allow="autoplay; encrypted-media"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="videoOverlay">
+        <div>
+          <h2>Guarda cosa può uscire dal tuo materasso</h2>
+          <span>Test dimostrativo a domicilio – Modena</span>
+        </div>
+      </div>
+    </div>
 
     <div class="topbar">
-      <div class="brand"><span class="dot"></span> Igiene Casa • Modena</div>
+      <div class="brand"><span class="dot"></span> Progetto Igiene Casa • Modena</div>
       <div class="chips">
         <div class="chip">✅ A domicilio</div>
         <div class="chip">✅ Test polveri/acari</div>
@@ -357,8 +409,9 @@
             </div>
 
             <div class="wowCard">
-         <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop"
-     alt="Acari della polvere al microscopio">
+              <!-- Immagine acari stabile su Unsplash -->
+              <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=1600&auto=format&fit=crop"
+                   alt="Acari della polvere al microscopio">
               <div class="wowLabel">🔬 Invisibile: acari & polveri nel tempo</div>
             </div>
           </div>

@@ -185,8 +185,107 @@
     }
     summary{cursor:pointer;font-weight:900}
     details p{margin:10px 0 0;color:var(--muted);line-height:1.45}
+
+    /* === WOW IMAGES === */
+    .wowImages{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      margin-top:18px;
+    }
+    @media(max-width:700px){
+      .wowImages{grid-template-columns:1fr}
+    }
+    .wowCard{
+      position:relative;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--line);
+      box-shadow:0 20px 44px rgba(0,0,0,.48);
+      background:rgba(255,255,255,.02);
+    }
+    .wowCard img{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      display:block;
+      transform:scale(1.02);
+      filter:saturate(1.05) contrast(1.05);
+      transition:transform .35s ease;
+    }
+    .wowLabel{
+      position:absolute;
+      left:12px;
+      bottom:12px;
+      padding:10px 12px;
+      border-radius:14px;
+      font-weight:900;
+      font-size:13px;
+      color:var(--text);
+      background:rgba(0,0,0,.45);
+      border:1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+    .wowCard::after{
+      content:"";
+      position:absolute;
+      inset:-40% -60%;
+      background:linear-gradient(120deg, transparent 40%, rgba(255,255,255,.18) 50%, transparent 60%);
+      transform:translateX(-40%) rotate(8deg);
+      transition:transform .9s ease;
+      pointer-events:none;
+    }
+    .wowCard:hover::after{
+      transform:translateX(40%) rotate(8deg);
+    }
+    .wowCard:hover img{
+      transform:scale(1.06);
+    }
+
+    /* === BIG IMPACT BOX === */
+    .impactBox{
+      margin-top:12px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.16);
+      border-radius:16px;
+      padding:14px;
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:10px;
+    }
+    @media(max-width:700px){
+      .impactBox{grid-template-columns:1fr}
+    }
+    .impactItem{
+      display:flex;gap:10px;align-items:flex-start;
+      padding:12px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.03);
+    }
+    .impactEmoji{
+      width:38px;height:38px;border-radius:14px;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(96,165,250,.14);
+      border:1px solid rgba(96,165,250,.22);
+      font-size:18px;
+      flex:0 0 auto;
+    }
+    .impactItem strong{font-size:14px}
+    .impactItem small{display:block;color:var(--muted);margin-top:2px;line-height:1.3}
+
+    /* === FADE IN ON SCROLL === */
+    .fadeUp{
+      opacity:0;
+      transform:translateY(14px);
+      transition:opacity .6s ease, transform .6s ease;
+    }
+    .fadeUp.show{
+      opacity:1;
+      transform:translateY(0);
+    }
   </style>
 </head>
+
 <body>
   <div class="wrap">
 
@@ -240,6 +339,46 @@
             </div>
           </div>
 
+          <!-- WOW IMAGES -->
+          <div class="wowImages fadeUp">
+            <div class="wowCard">
+              <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1600&auto=format&fit=crop"
+                   alt="Letto pulito e accogliente">
+              <div class="wowLabel">🛏️ Il letto che vuoi: pulito & fresco</div>
+            </div>
+
+            <div class="wowCard">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Dust_mite.jpg"
+                   alt="Acari della polvere al microscopio">
+              <div class="wowLabel">🔬 Invisibile: acari & polveri nel tempo</div>
+            </div>
+          </div>
+
+          <!-- IMPACT BOX -->
+          <div class="impactBox fadeUp">
+            <div class="impactItem">
+              <div class="impactEmoji">🤧</div>
+              <div>
+                <strong>Allergie / polvere</strong>
+                <small>Se starnutisci spesso, il materasso è un punto chiave.</small>
+              </div>
+            </div>
+            <div class="impactItem">
+              <div class="impactEmoji">👶</div>
+              <div>
+                <strong>Bambini in casa</strong>
+                <small>Letto più pulito = sonno più tranquillo.</small>
+              </div>
+            </div>
+            <div class="impactItem">
+              <div class="impactEmoji">🐾</div>
+              <div>
+                <strong>Animali domestici</strong>
+                <small>Peli e micro-polveri si accumulano più facilmente.</small>
+              </div>
+            </div>
+          </div>
+
           <div class="ctaRow">
             <a class="btn btnwa" id="waBtn" href="#" target="_blank" rel="noopener">
               📲 Prenota su WhatsApp
@@ -249,7 +388,7 @@
 
           <div class="mini">
             <div class="badge"><span class="star">★</span> Risposta rapida</div>
-            <div class="badge">🛡️ Operatori verificati</div>
+            <div class="badge">🧾 Metodo dimostrativo dal vivo</div>
             <div class="badge">📍 Modena & provincia</div>
           </div>
 
@@ -374,6 +513,15 @@
       alert("Errore rete. Scrivimi su WhatsApp.");
     }
   });
+
+  // Fade-in quando scorri
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting) e.target.classList.add("show");
+    });
+  },{threshold:0.15});
+
+  document.querySelectorAll(".fadeUp").forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
